@@ -8,9 +8,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class FrequentFlyerApplicationTests {
-
 	@Test
 	public void contextLoads() {
 	}
-
 }

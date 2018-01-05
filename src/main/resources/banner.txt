@@ -10,5 +10,5 @@
 ${description}
 
 ${AnsiColor.BRIGHT_RED}Spring Boot Version : ${spring-boot.version}
-${AnsiColor.BRIGHT_CYAN}${name}             : ${application.version}
+${AnsiColor.BRIGHT_CYAN}${name}       : ${application.version}
 ${AnsiColor.BRIGHT_BLACK}Authors             : Kamil Sięka, Zachariasz Zacharski
