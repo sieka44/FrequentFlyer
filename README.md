@@ -1,3 +1,4 @@
+```
   ______                               _     ______ _
  |  ____|                             | |   |  ____| |
  | |__ _ __ ___  __ _ _   _  ___ _ __ | |_  | |__  | |_   _  ___ _ __
@@ -6,6 +7,7 @@
  |_|  |_|  \___|\__, |\__,_|\___|_| |_|\__| |_|    |_|\__, |\___|_|
                    | |                                 __/ |
                    |_|                                |___/
+```
 
-Web application for frequent flyers
-Authors: Kamil Sięka, Zachariasz Zacharski
+Web application for frequent flyers  
+Authors: Kamil Sięka, Zachariasz Zacharski  
