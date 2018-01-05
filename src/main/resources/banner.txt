@@ -7,5 +7,8 @@
                    | |                                 __/ |
                    |_|                                |___/
 
-Web application for frequent flyers
-Authors: Kamil Sięka, Zachariasz Zacharski
+${description}
+
+${AnsiColor.BRIGHT_RED}Spring Boot Version : ${spring-boot.version}
+${AnsiColor.BRIGHT_CYAN}${name}             : ${application.version}
+${AnsiColor.BRIGHT_BLACK}Authors             : Kamil Sięka, Zachariasz Zacharski
