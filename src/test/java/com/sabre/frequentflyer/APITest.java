@@ -4,6 +4,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.sabre.frequentflyer.api.APIController;
+import com.sabre.frequentflyer.api.Coordinates;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Test;
@@ -38,6 +39,14 @@ public class APITest extends FrequentFlyerApplication {
             double longitude = arr.getJSONObject(0).getDouble("longitude");
             System.out.println(latitude + " " + longitude);
         }
+    }
+
+    @Test
+    public void getDistanceTest() throws IOException, UnirestException {
+        APIController controller = new APIController();
+        Coordinates[] coordinates = controller.getCoordinates("KRK","ATL");
+        System.out.println(controller.getDistance(coordinates)+ " km");
+        System.out.println((double) (8110-2)<controller.getDistance(coordinates)&&controller.getDistance(coordinates)<(double)(8110+2));
     }
 
 }

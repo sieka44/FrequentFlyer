@@ -79,14 +79,18 @@ public class APIController {
                 double x = arr.getJSONObject(0).getDouble("latitude");
                 double y = arr.getJSONObject(0).getDouble("longitude");
                 coordinates[i]=new Coordinates(name,x,y);
-                return coordinates;
             }
+            return coordinates;
         } catch (UnirestException e) {
             e.printStackTrace();
             if(getAccesToken())return getCoordinates(city1,city2);
         }
 
         return null;
+    }
+
+    public double getDistance(Coordinates[] coordinates){
+        return new HaversineFormula().distance(coordinates[0].getLatitude(),coordinates[0].getLongtitude(),coordinates[1].getLatitude(),coordinates[1].getLongtitude());
     }
 
 }
