@@ -18,7 +18,7 @@ public class APITest extends FrequentFlyerApplication {
     @Test
     public void getAccessTokenTest() throws UnirestException, IOException {
         APIController apiController = new APIController();
-        apiController.getAccesToken();
+        apiController.getAccessToken();
         System.out.println(apiController.getToken());
     }
     @Test

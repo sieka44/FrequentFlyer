@@ -3,12 +3,12 @@ package com.sabre.frequentflyer.api;
 public class Coordinates {
     private String name;
     private double latitude;
-    private double longtitude;
+    private double longitude;
 
-    Coordinates(String name, double latitude, double longtitude ){
+    Coordinates(String name, double latitude, double longitude){
         this.name = name;
         this.latitude = latitude;
-        this.longtitude = longtitude;
+        this.longitude = longitude;
     }
 
     public String getName() {
@@ -19,7 +19,7 @@ public class Coordinates {
         return latitude;
     }
 
-    public double getLongtitude() {
-        return longtitude;
+    public double getLongitude() {
+        return longitude;
     }
 }

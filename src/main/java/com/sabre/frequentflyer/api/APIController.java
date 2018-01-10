@@ -16,7 +16,8 @@ import java.util.Base64;
 
 public class APIController {
     @Autowired
-    FFAPIConfig APIConfig = new FFAPIConfig();
+    FFAPIConfig APIConfig;
+
     private static final String ACCESS_TOKEN_URL= "https://api-crt.cert.havail.sabre.com/v2/auth/token";
     private static final String GET_COORDINATES_URL= "https://api-crt.cert.havail.sabre.com/v1/lists/utilities/geocode/locations/";
     AccessToken accessToken = null;
@@ -25,7 +26,7 @@ public class APIController {
         return accessToken;
     }
 
-    private String createTokenCredintials(){
+    private String createTokenCredentials(){
         final byte[] domainBytes = APIConfig.getDomain().getBytes(StandardCharsets.UTF_8);
         final byte[] secretBytes = APIConfig.getClientSecret().getBytes(StandardCharsets.UTF_8);
 
@@ -34,12 +35,12 @@ public class APIController {
         return Base64.getEncoder().encodeToString(outcome.getBytes());
     }
 
-    public boolean getAccesToken() {
-        String credintials = createTokenCredintials();
+    public boolean getAccessToken() {
+        String credentials = createTokenCredentials();
         HttpResponse<String> response = null;
         try {
             response = Unirest.post(ACCESS_TOKEN_URL)
-                    .header("authorization", "Basic " + credintials)
+                    .header("authorization", "Basic " + credentials)
                     .header("content-type", "application/x-www-form-urlencoded")
                     .header("grant_type", "client_credentials")
                     .header("cache-control", "no-cache").asString();
@@ -58,8 +59,8 @@ public class APIController {
         return false;
     }
 
-    public Coordinates[] getCoordinates(String city1,String city2) throws IOException, UnirestException {
-        if(accessToken==null)getAccesToken();
+    public Coordinates[] getCoordinates(String city1,String city2) {
+        if(accessToken==null)getAccessToken();
 
         HttpResponse<String> response = null;
         try {
@@ -83,14 +84,14 @@ public class APIController {
             return coordinates;
         } catch (UnirestException e) {
             e.printStackTrace();
-            if(getAccesToken())return getCoordinates(city1,city2);
+            if(getAccessToken())return getCoordinates(city1,city2);
         }
 
         return null;
     }
 
     public double getDistance(Coordinates[] coordinates){
-        return new HaversineFormula().distance(coordinates[0].getLatitude(),coordinates[0].getLongtitude(),coordinates[1].getLatitude(),coordinates[1].getLongtitude());
+        return new HaversineFormula().distance(coordinates[0].getLatitude(),coordinates[0].getLongitude(),coordinates[1].getLatitude(),coordinates[1].getLongitude());
     }
 
 }
