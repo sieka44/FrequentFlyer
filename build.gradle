@@ -26,6 +26,7 @@ sass {
 
 		outSubDir = "css"
 		registerInSourceSets ( 'main' )
+		minify = true
 	}
 }
 
@@ -44,7 +45,6 @@ processResources {
 repositories {
 	mavenCentral()
 }
-
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
