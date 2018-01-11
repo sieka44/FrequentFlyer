@@ -1,0 +1,29 @@
+$primary-color: black;
+$tab-color: #428BCA;
+$tab-color-active: #72badb;
+
+html {
+  color: $primary-color;
+}
+
+[v-cloak] {
+  display: none;
+}
+
+.tabs li {
+  &.tab {
+    width: 20%;
+
+    a {
+      color: $tab-color;
+
+      &:hover, &.active {
+        color: $tab-color-active;
+      }
+    }
+  }
+
+  &.indicator {
+    background-color: $tab-color-active;
+  }
+}

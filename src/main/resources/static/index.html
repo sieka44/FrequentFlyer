@@ -3,13 +3,43 @@
 <head>
     <title>FrequentFlyer</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link href="css/test.css" rel="stylesheet"/>
+    <link type="text/css" rel="stylesheet" href="css/lib/materialize.min.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/main.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
-<body>
-<div id="app">
-    {{ text }}
+<body class = "container">
+<div id="app" v-cloak>
+    <div class = "row">
+        <div class = "col s12">
+            <ul class = "tabs">
+                <li class = "tab col"><a class = "active" href = "#home">Homepage</a></li>
+                <li class = "tab col"><a href = "#profile">
+                    Profile</a></li>
+                <li class = "tab col"><a href = "#offers">
+                    Offers</a></li>
+                <li class = "tab col"><a href = "#ticket">+Add ticket</a></li>
+                <li class = "tab col"><a onclick="window.location = '/logout'">Logout</a></li>
+            </ul>
+        </div>
+
+        <div id = "home" class = "col s12">
+            <h3>{{ text }}</h3>
+        </div>
+        <div id = "profile" class = "col s12">
+            Profile
+        </div>
+        <div id = "offers" class = "col s12">
+            Offers
+        </div>
+        <div id = "ticket" class = "col s12">
+            +Add ticket
+        </div>
+    </div>
 </div>
-<script src="https://vuejs.org/js/vue.js"></script>
-<script src="js/test.js"></script>
+<script type="text/javascript" src="js/lib/vue.min.js"></script>
+<script type="text/javascript" src="js/lib/vue-resource.min.js"></script>
+<script type="text/javascript" src="js/lib/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="js/lib/materialize.min.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>

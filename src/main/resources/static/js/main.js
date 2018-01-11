@@ -1,6 +1,6 @@
-var example1 = new Vue({
+var application = new Vue({
   el: '#app',
   data: {
     text: "Hello world!"
   }
-})
+});
