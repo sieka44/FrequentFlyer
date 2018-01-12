@@ -9,14 +9,15 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 public class APIController {
-    @Autowired
-    FFAPIConfig APIConfig;
+
+    FFAPIConfig APIConfig= new FFAPIConfig();
 
     private static final String ACCESS_TOKEN_URL= "https://api-crt.cert.havail.sabre.com/v2/auth/token";
     private static final String GET_COORDINATES_URL= "https://api-crt.cert.havail.sabre.com/v1/lists/utilities/geocode/locations/";
