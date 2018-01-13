@@ -1,7 +1,5 @@
 package com.sabre.frequentflyer.api;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
@@ -14,27 +12,32 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 public class APIController {
+    private static final String ACCESS_TOKEN_URL = "https://api-crt.cert.havail.sabre.com/v2/auth/token";
+    private static final String GET_COORDINATES_URL
+            = "https://api-crt.cert.havail.sabre.com/v1/lists/utilities/geocode/locations/";
+    public final static String DOMAIN = "V1:56tl4jc7qge5xhb7:DEVCENTER:EXT";
+    public final static String CLIENT_SECRET = "GPmcw02H";
 
-    FFAPIConfig APIConfig= new FFAPIConfig();
+    private static AccessToken accessToken;
 
-    private static final String ACCESS_TOKEN_URL= "https://api-crt.cert.havail.sabre.com/v2/auth/token";
-    private static final String GET_COORDINATES_URL= "https://api-crt.cert.havail.sabre.com/v1/lists/utilities/geocode/locations/";
-    AccessToken accessToken = null;
+    private APIController() {
+        //not for instantiation
+    }
 
-    public AccessToken getToken() {
+    public static final AccessToken getAccessToken() {
         return accessToken;
     }
 
-    private String createTokenCredentials(){
-        final byte[] domainBytes = APIConfig.getDomain().getBytes(StandardCharsets.UTF_8);
-        final byte[] secretBytes = APIConfig.getClientSecret().getBytes(StandardCharsets.UTF_8);
+    private static String createTokenCredentials(){
+        final byte[] domainBytes = DOMAIN.getBytes(StandardCharsets.UTF_8);
+        final byte[] secretBytes = CLIENT_SECRET.getBytes(StandardCharsets.UTF_8);
 
         String outcome = Base64.getEncoder().encodeToString(domainBytes) + ":" +
                             Base64.getEncoder().encodeToString(secretBytes);
         return Base64.getEncoder().encodeToString(outcome.getBytes());
     }
 
-    public boolean getAccessToken() {
+    private static void refreshToken() {
         String credentials = createTokenCredentials();
         HttpResponse<String> response = null;
         try {
@@ -45,21 +48,19 @@ public class APIController {
                     .header("cache-control", "no-cache").asString();
             ObjectMapper mapper = new ObjectMapper();
             accessToken = mapper.readValue(response.getBody(),AccessToken.class);
-            return true;
-        } catch (UnirestException e) {
-            e.printStackTrace();
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (UnirestException | IOException e) {
             e.printStackTrace();
         }
-        return false;
     }
 
-    public Coordinates[] getCoordinates(String city1,String city2) {
-        if(accessToken==null)getAccessToken();
+    static {
+        refreshToken();
+    }
+
+    public static Coordinates[] getCoordinates(String city1, String city2) {
+        if (accessToken==null) {
+            refreshToken();
+        }
 
         HttpResponse<String> response = null;
         try {
@@ -83,14 +84,15 @@ public class APIController {
             return coordinates;
         } catch (UnirestException e) {
             e.printStackTrace();
-            if(getAccessToken())return getCoordinates(city1,city2);
+            accessToken = null;
         }
-
         return null;
     }
 
-    public double getDistance(Coordinates[] coordinates){
-        return new HaversineFormula().distance(coordinates[0].getLatitude(),coordinates[0].getLongitude(),coordinates[1].getLatitude(),coordinates[1].getLongitude());
+    public static double getDistance(Coordinates[] coordinates){
+        return new HaversineFormula().distance(
+                coordinates[0].getLatitude(),coordinates[0].getLongitude(),
+                coordinates[1].getLatitude(),coordinates[1].getLongitude()
+        );
     }
-
 }
