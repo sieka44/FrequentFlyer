@@ -1,6 +1,6 @@
 $primary-color: black;
-$tab-color: #428BCA;
-$tab-color-active: #72badb;
+$tab-color: #292929; //#428BCA;
+$tab-color-active: #434343; //#72badb;
 
 html {
   color: $primary-color;
@@ -10,20 +10,39 @@ html {
   display: none;
 }
 
-.tabs li {
-  &.tab {
-    width: 20%;
+.tabs {
+  margin-bottom: 20px;
 
-    a {
-      color: $tab-color;
+  li {
+    &.tab {
+      width: 20%;
 
-      &:hover, &.active {
-        color: $tab-color-active;
+      a {
+        color: $tab-color;
+
+        &:hover, &.active {
+          color: $tab-color-active;
+        }
       }
     }
+
+    &.indicator {
+      background-color: $tab-color-active;
+    }
+  }
+}
+
+#home {
+  img#status {
+    width: 64px;
+    display: inline;
+    position: relative;
+    top: 10px;
+    right: 5px;
+    margin-right: 10px;
   }
 
-  &.indicator {
-    background-color: $tab-color-active;
+  h3 {
+    display: inline;
   }
 }
