@@ -1,16 +1,61 @@
-$primary-color: black;
-$tab-color: #292929; //#428BCA;
-$tab-color-active: #434343; //#72badb;
+$font-stack: Roboto, sans-serif;
+$primary-color: #434343;
+$tab-color: #292929;
+$tab-color-active: $primary-color;
 
-html {
-  color: $primary-color;
+body {
+  font: 100% $font-stack;
 }
 
-[v-cloak] {
+#loading {
+  padding: 27% 48%;
+}
+
+[v-cloak], #app:not([loaded]),
+#app[loaded] + #loading {
   display: none;
 }
 
+#dropdown1 {
+  top: 64px;
+}
+
+nav {
+  background-color: $primary-color;
+  padding-left: 18px;
+
+  .brand-logo > img {
+    width: 42px;
+    margin-right: 12px;
+    position: relative;
+    top: 10px;
+    vertical-align: top;
+  }
+
+  > .nav-wrapper > ul {
+    > li, a.dropdown-button {
+      height: 60px;
+    }
+
+    a.dropdown-button:hover {
+      height: 64px;
+    }
+
+    span {
+      vertical-align: top;
+      margin-left: 10px;
+    }
+
+    img {
+      position: relative;
+      top: 10px;
+      border-radius: 180px;
+    }
+  }
+}
+
 .tabs {
+  margin-top: 15px;
   margin-bottom: 20px;
 
   li {
@@ -33,16 +78,27 @@ html {
 }
 
 #home {
-  img#status {
-    width: 64px;
+  #status {
+    width: 120px;
+
+    img { width: 100%; }
     display: inline;
     position: relative;
     top: 10px;
     right: 5px;
-    margin-right: 10px;
+  }
+
+  #prog-desc {
+    width: calc(100% - 128px);
   }
 
   h3 {
     display: inline;
+  }
+
+  .card .card-image .card-title {
+    width: 100%;
+    background: rgba(0,0,0,0.4);
+    padding: 12px 24px;
   }
 }
