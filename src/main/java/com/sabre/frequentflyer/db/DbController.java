@@ -20,7 +20,6 @@ public class DbController {
     public DbController(){
         tickets = new MultiValueMap();
         users = new LinkedList<>();
-
     }
 
     public boolean isRegistered(String userMail){
@@ -31,6 +30,10 @@ public class DbController {
         tickets.put(userMail,ticket);
     }
 
+    public List getUsers(){
+        return users;
+    }
+
     public void loadDbData(String fileName){
         BufferedReader br = null;
         String line;
@@ -39,7 +42,7 @@ public class DbController {
             while ((line = br.readLine()) != null){
                 String[] data = line.split(";");
                 if(data.length < 10) continue;
-                users.add(new User(data[0].trim(),data[1].trim(),data[2].trim()));
+                if(!isInDatabase(data[2].trim()))users.add(new User(data[0].trim(),data[1].trim(),data[2].trim()));
 
                 DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 Date tmpDate = format.parse(data[9].trim());
@@ -58,6 +61,13 @@ public class DbController {
 
     public List getTickets(String email){
         return new LinkedList(tickets.getCollection(email));
+    }
+
+    public boolean isInDatabase(String mail){
+        for(User user: users){
+            if(user.getEmail().equals(mail))return true;
+        }
+        return false;
     }
 
 }
