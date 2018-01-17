@@ -7,6 +7,13 @@ body {
   font: 100% $font-stack;
 }
 
+.auth0-lock-form input {
+  margin: 0!important;
+  border: none!important;
+  -webkit-box-shadow: none!important;
+  box-shadow: none!important;
+}
+
 #loading {
   padding: 20% 48%;
 }
