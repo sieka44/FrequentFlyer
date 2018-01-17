@@ -10,134 +10,137 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
-<nav>
-    <ul id="dropdown1" class="dropdown-content">
-        <li><a href="/logout">Logout</a></li>
-    </ul>
-    <div class="nav-wrapper">
-        <a href="#" class="brand-logo"><img src="/img/logo.png"/>FrequentFlyer</a>
-        <a href="#" data-activates="mobile-demo" class="right button-collapse">
-            <i class="material-icons">menu</i>
-        </a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li th:inline="text">
-                <a class="dropdown-button" data-beloworigin="true" href="#" data-activates="dropdown1">
-                    <img src="https://www.gravatar.com/avatar/36cde6f7306c912901defbc559e980ac?s=42"/>
-                    <span>c37zax@gmail.com</span>
-                    <i class="material-icons right">arrow_drop_down</i>
-                </a>
-            </li>
+<div id="app">
+    <nav>
+        <ul id="dropdown1" class="dropdown-content">
+            <li><a onclick="logout()">Logout</a></li>
         </ul>
-        <ul class="side-nav" id="mobile-demo">
-            <li><img src="https://www.gravatar.com/avatar/36cde6f7306c912901defbc559e980ac?s=42"/></li>
-            <li><a href="/logout">Logout</a></li>
-        </ul>
-    </div>
-</nav>
-<div id="app" v-cloak class="container">
-    <div class = "row">
-        <div class = "col s12">
-            <ul class = "tabs">
-                <li class = "tab col"><a class = "active" href = "#home">Homepage</a></li>
-                <li class = "tab col"><a href = "#profile">
-                    Profile</a></li>
-                <li class = "tab col"><a href = "#offers">
-                    Offers</a></li>
-                <li class = "tab col"><a href = "#ticket">+Add ticket</a></li>
-                <li class = "tab col"><a onclick="window.location = '/logout'">Logout</a></li>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo"><img src="/img/logo.png"/>FrequentFlyer</a>
+            <a href="#" data-activates="mobile-demo" class="right button-collapse">
+                <i class="material-icons">menu</i>
+            </a>
+            <ul v-cloak id="nav-mobile" class="right hide-on-med-and-down">
+                <li th:inline="text">
+                    <a class="dropdown-button" data-beloworigin="true" href="#" data-activates="dropdown1">
+                        <img class="avatar" :src=user.picture />
+                        <span>{{user.name}}</span>
+                        <i class="material-icons right">arrow_drop_down</i>
+                    </a>
+                </li>
+            </ul>
+            <ul v-cloak class="side-nav" id="mobile-demo">
+                <li><img class="avatar" :src=user.picture /><span>{{user.name}}</span></li>
+                <li><a onclick="logout()"></a></li>
             </ul>
         </div>
-
-        <div id = "home" class = "col s12">
-            <div id="status" class="col">
-                <img src="img/ffstatus/bronze.png"/>
+    </nav>
+    <div id="main" v-cloak class="container">
+        <div class = "row">
+            <div class = "col s12">
+                <ul class = "tabs">
+                    <li class = "tab col"><a class = "active" href = "#home">Homepage</a></li>
+                    <li class = "tab col"><a href = "#profile">
+                        Profile</a></li>
+                    <li class = "tab col"><a href = "#offers">
+                        Offers</a></li>
+                    <li class = "tab col"><a href = "#ticket">+Add ticket</a></li>
+                    <li class = "tab col"><a onclick="window.location = '/logout'">Logout</a></li>
+                </ul>
             </div>
-            <div id="prog-desc" class="col">
-                <h4>You travelled 1337 miles with&nbsp;us!</h4>
-                <h6>Travel 663 more to get to silver frequent flyer status.</h6>
 
-                <div class="progress">
-                    <div class="determinate" style="width: 70%; display: none;"></div>
+            <div id = "home" class = "col s12">
+                <div id="status" class="col">
+                    <img src="img/ffstatus/bronze.png"/>
                 </div>
-            </div>
+                <div id="prog-desc" class="col">
+                    <h4>You travelled 1337 miles with&nbsp;us!</h4>
+                    <h6>Travel 663 more to get to silver frequent flyer status.</h6>
 
-            <br>
-
-            <div class="col s12">
-                <h4 class="light">Your last travels:</h4>
-
-                <div class="row">
-                    <div class="col s12 m6">
-                        <div class="card medium">
-                            <div class="card-image">
-                                <img src="img/city/KRA.jpg">
-                                <span class="card-title">Kraków</span>
-                            </div>
-                            <div class="card-content">
-                                <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-                            </div>
-                            <div class="card-action">
-                                <a href="#">This is a link</a>
-                                <a href="#">This is a link</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col s12 m6">
-                        <div class="card medium">
-                            <div class="card-image">
-                                <img src="img/city/NYC.jpg">
-                                <span class="card-title">New York</span>
-                            </div>
-                            <div class="card-content">
-                                <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-                            </div>
-                            <div class="card-action">
-                                <a href="#">This is a link</a>
-                                <a href="#">This is a link</a>
-                            </div>
-                        </div>
+                    <div class="progress">
+                        <div class="determinate" style="width: 70%; display: none;"></div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div id = "profile" class = "col s12">
-            Profile
-        </div>
-        <div id = "offers" class = "col s12">
-            Offers
-        </div>
-        <div id = "ticket" class = "col s12">
-            <div class="row">
-                <form class="col s12 m6">
+
+                <br>
+
+                <div class="col s12">
+                    <h4 class="light">Your last travels:</h4>
+
                     <div class="row">
-                        <div class="input-field col s12">
-                            <input id="from" class="validate">
-                            <label for="from" data-error="wrong" data-success="right">From</label>
+                        <div class="col s12 m6">
+                            <div class="card medium">
+                                <div class="card-image">
+                                    <img src="img/city/KRA.jpg">
+                                    <span class="card-title">Kraków</span>
+                                </div>
+                                <div class="card-content">
+                                    <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                                </div>
+                                <div class="card-action">
+                                    <a href="#">This is a link</a>
+                                    <a href="#">This is a link</a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="input-field col s12">
-                            <input id="to" class="validate">
-                            <label for="to" data-error="wrong" data-success="right">To</label>
+                        <div class="col s12 m6">
+                            <div class="card medium">
+                                <div class="card-image">
+                                    <img src="img/city/NYC.jpg">
+                                    <span class="card-title">New York</span>
+                                </div>
+                                <div class="card-content">
+                                    <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                                </div>
+                                <div class="card-action">
+                                    <a href="#">This is a link</a>
+                                    <a href="#">This is a link</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </form>
-                <div class="col s12 m6">
+                </div>
+            </div>
+            <div id = "profile" class = "col s12">
+                Profile
+            </div>
+            <div id = "offers" class = "col s12">
+                Offers
+            </div>
+            <div id = "ticket" class = "col s12">
+                <div class="row">
+                    <form class="col s12 m6">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="from" class="validate">
+                                <label for="from" data-error="wrong" data-success="right">From</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <input id="to" class="validate">
+                                <label for="to" data-error="wrong" data-success="right">To</label>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="col s12 m6">
 
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div id="loading"><div class="preloader-wrapper big active">
-    <div class="spinner-layer spinner-blue-only">
-        <div class="circle-clipper left">
+    <div id="loading"><div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div><div class="gap-patch">
             <div class="circle"></div>
-        </div><div class="gap-patch">
-        <div class="circle"></div>
-    </div><div class="circle-clipper right">
-        <div class="circle"></div>
-    </div>
-    </div>
-</div></div>
+        </div><div class="circle-clipper right">
+            <div class="circle"></div>
+        </div>
+        </div>
+    </div></div>
+</div>
+<script type="text/javascript" src="js/lib/lock.min.js"></script>
 <script type="text/javascript" src="js/lib/vue.min.js"></script>
 <script type="text/javascript" src="js/lib/vue-resource.min.js"></script>
 <script type="text/javascript" src="js/lib/jquery-3.1.1.min.js"></script>

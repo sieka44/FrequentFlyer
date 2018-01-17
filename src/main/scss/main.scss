@@ -8,11 +8,11 @@ body {
 }
 
 #loading {
-  padding: 27% 48%;
+  padding: 20% 48%;
 }
 
-[v-cloak], #app:not([loaded]),
-#app[loaded] + #loading {
+[v-cloak], #app:not([loaded]) > #main,
+[loaded] #loading {
   display: none;
 }
 
@@ -20,7 +20,13 @@ body {
   top: 64px;
 }
 
+#main {
+  padding-top: 70px;
+}
+
 nav {
+  position: fixed;
+  z-index: 999;
   background-color: $primary-color;
   padding-left: 18px;
 
@@ -46,10 +52,11 @@ nav {
       margin-left: 10px;
     }
 
-    img {
+    .avatar {
       position: relative;
       top: 10px;
       border-radius: 180px;
+      width: 42px;
     }
   }
 }
