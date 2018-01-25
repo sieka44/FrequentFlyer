@@ -20,7 +20,7 @@ public class UserDataController {
     public RedirectView updateProfile(@RequestParam String name,
                                       @RequestParam String address,
                                       @RequestParam String token) {
-        //Here update the profile
-        return new RedirectView("/");
+        System.out.println(token);
+        return new RedirectView("/?to="+token);
     }
 }

@@ -105,14 +105,14 @@
                 </div>
                 <form method="post" action="./api/v1/updateProfile" class="col s10">
                     <div class="row">
-                        <input type="hidden" name="token" :value="token"/>
+                        <input type="hidden" name="token" v-model="token"/>
                         <div class="input-field col s12">
                             <input id="name" name="name" class="validate" type="text" :value="user.hasPersonalData?user.name:''"/>
-                            <label for="name" data-error="wrong" data-success="right">Name</label>
+                            <label for="name" :class="user.hasPersonalData?'active':''" data-error="wrong" data-success="right">Name</label>
                         </div>
                         <div class="input-field col s12">
                             <input id="address" name="address" class="validate" type="text" :value="user.address"/>
-                            <label for="address" data-error="wrong" data-success="right">Address</label>
+                            <label for="address" :class="user.address?'active':''" data-error="wrong" data-success="right">Address</label>
                         </div>
                         <button class="btn waves-effect waves-light right" type="submit">Save
                             <i class="material-icons right">send</i>

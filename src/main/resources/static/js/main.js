@@ -6,8 +6,6 @@ function loadStep() {
         $("#app").attr('loaded', 'true');
         $(".determinate").show("slide", { direction: "left" }, 100);
         $(".tabs > .tab:first-child > a").click();
-
-        Materialize.updateTextFields();
     }
 }
 
@@ -16,7 +14,8 @@ application = new Vue({
     data: {
         user: {
             name:'', picture:''
-        }
+        },
+        token: "temp"
     },
     mounted() {
         this.$http.get('/api/v1/getUserStatus').then(
@@ -59,8 +58,6 @@ getUserData = function(profile) {
     };
     application.$forceUpdate();
     loadStep();
-
-    console.log(profile);
 };
 
 // Listening for the authenticated event
@@ -70,6 +67,8 @@ lock.on("authenticated", function(authResult) {
             // Handle error
             return;
         }
+
+        application.token = authResult.accessToken;
 
         for(entry in profile["http://localhost:8080/user_metadata"]) {
             profile[entry] = profile["http://localhost:8080/user_metadata"][entry];
@@ -83,10 +82,13 @@ lock.on("authenticated", function(authResult) {
     });
 });
 
-if (token.length !== 32 && (storageToken = localStorage.getItem('accessToken'),
-        !storageToken || storageToken.length !== 32)) {
+if (token.length !== 32) {
+    token = localStorage.getItem('accessToken');
+}
+if (!token || token.length !== 32) {
     lock.show();
 } else {
+    application.token = token;
     profile = JSON.parse(localStorage.getItem('profile'));
     if (profile) {
         document.getElementById('loading').style.display = null;
