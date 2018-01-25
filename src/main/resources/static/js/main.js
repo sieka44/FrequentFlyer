@@ -3,11 +3,11 @@ let loaded = 0, toLoad = 2;
 function loadStep() {
     loaded++;
     if (loaded >= toLoad) {
-        setTimeout(function () {
-            $("#app").attr('loaded', 'true');
-            $(".determinate").show("slide", { direction: "left" }, 1000);
-            $(".tabs > .tab:first-child > a").click();
-        }, 1000);
+        $("#app").attr('loaded', 'true');
+        $(".determinate").show("slide", { direction: "left" }, 100);
+        $(".tabs > .tab:first-child > a").click();
+
+        Materialize.updateTextFields();
     }
 }
 
@@ -49,40 +49,51 @@ var lock = new Auth0Lock(
         }
     }
 );
+
+getUserData = function(profile) {
+    application.user = {
+        picture: profile.picture,
+        name: profile.name,
+        hasPersonalData: (profile.given_name !== null),
+        address: profile.address
+    };
+    application.$forceUpdate();
+    loadStep();
+
+    console.log(profile);
+};
+
 // Listening for the authenticated event
 lock.on("authenticated", function(authResult) {
-    // Use the token in authResult to getUserInfo() and save it to localStorage
     lock.getUserInfo(authResult.accessToken, function(error, profile) {
         if (error) {
             // Handle error
             return;
         }
 
+        for(entry in profile["http://localhost:8080/user_metadata"]) {
+            profile[entry] = profile["http://localhost:8080/user_metadata"][entry];
+        }
+        profile["http://localhost:8080/user_metadata"] = null;
+
         localStorage.setItem('accessToken', authResult.accessToken);
         localStorage.setItem('profile', JSON.stringify(profile));
 
-        application.user = {
-            picture: profile.picture,
-            name: profile.name
-        };
-        application.$forceUpdate();
-        loadStep();
+        getUserData(profile);
     });
 });
 
-if (token.length != 32 && (token = localStorage.getItem('accessToken'),
-    !token || token.length != 32)) {
+if (token.length !== 32 && (storageToken = localStorage.getItem('accessToken'),
+        !storageToken || storageToken.length !== 32)) {
     lock.show();
 } else {
-    document.getElementById('loading').style.display = null;
-    if (profile = JSON.parse(localStorage.getItem('profile'))) {
-        application.user = {
-            picture: profile.picture,
-            name: profile.name
-        };
-        application.$forceUpdate();
-    }
-    loadStep();
+    profile = JSON.parse(localStorage.getItem('profile'));
+    if (profile) {
+        document.getElementById('loading').style.display = null;
+        getUserData(profile);
+    } /*else {
+        lock.show();
+    }*/
 }
 
 function logout () {

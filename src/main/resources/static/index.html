@@ -4,8 +4,8 @@
     <title>FrequentFlyer</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="css/lib/materialize.min.css" media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="css/lib/jquery-ui.min.css"/>
+    <link type="text/css" rel="stylesheet" href="css/lib/materialize.min.css" media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="css/main.css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
@@ -13,7 +13,7 @@
 <div id="app">
     <nav>
         <ul id="dropdown1" class="dropdown-content">
-            <li><a onclick="logout()">Logout</a></li>
+            <li><a href class="logoutButton" onclick="logout()">Logout</a></li>
         </ul>
         <div class="nav-wrapper">
             <a href="#" class="brand-logo"><img src="/img/logo.png"/>FrequentFlyer</a>
@@ -30,8 +30,8 @@
                 </li>
             </ul>
             <ul v-cloak class="side-nav" id="mobile-demo">
-                <li><img class="avatar" :src=user.picture /><span>{{user.name}}</span></li>
-                <li><a onclick="logout()"></a></li>
+                <li><a><img class="avatar" :src=user.picture /><span>{{user.name}}</span></a></li>
+                <li><a href class="logoutButton" onclick="logout()">Logout</a></li>
             </ul>
         </div>
     </nav>
@@ -45,11 +45,11 @@
                     <li class = "tab col"><a href = "#offers">
                         Offers</a></li>
                     <li class = "tab col"><a href = "#ticket">+Add ticket</a></li>
-                    <li class = "tab col"><a onclick="window.location = '/logout'">Logout</a></li>
+                    <li class = "tab col"><a href class="logoutButton" onclick="window.location = '/logout'">Logout</a></li>
                 </ul>
             </div>
 
-            <div id = "home" class = "col s12">
+            <div id="home" class = "col s12">
                 <div id="status" class="col">
                     <img src="img/ffstatus/bronze.png"/>
                 </div>
@@ -69,7 +69,7 @@
 
                     <div class="row">
                         <div class="col s12 m6">
-                            <div class="card medium">
+                            <div class="card medium hoverable">
                                 <div class="card-image">
                                     <img src="img/city/KRA.jpg">
                                     <span class="card-title">Kraków</span>
@@ -84,7 +84,7 @@
                             </div>
                         </div>
                         <div class="col s12 m6">
-                            <div class="card medium">
+                            <div class="card medium hoverable">
                                 <div class="card-image">
                                     <img src="img/city/NYC.jpg">
                                     <span class="card-title">New York</span>
@@ -101,22 +101,38 @@
                     </div>
                 </div>
             </div>
-            <div id = "profile" class = "col s12">
-                Profile
+            <div id="profile" class="col s12 active" style="">
+                <div class="col s2">
+                    <img class="avatar" :src=user.picture style="width: 100%;"/>
+                </div>
+                <form class="col s10">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="name" class="validate" type="text" :value="user.hasPersonalData?user.name:''"/>
+                            <label for="name" data-error="wrong" data-success="right">Name</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <input id="address" class="validate" type="text" :value="user.address"/>
+                            <label for="address" data-error="wrong" data-success="right">Address</label>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div id = "offers" class = "col s12">
-                Offers
+            <div id = "offers" class = "col s12 center">
+                <img src="img/error.jpg"/>
+                <h1>Sorry!</h1>
+                <h3>We currently don't have any offers for You.</h3>
             </div>
             <div id = "ticket" class = "col s12">
                 <div class="row">
                     <form class="col s12 m6">
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="from" class="validate">
+                                <input id="from" class="validate"/>
                                 <label for="from" data-error="wrong" data-success="right">From</label>
                             </div>
                             <div class="input-field col s12">
-                                <input id="to" class="validate">
+                                <input id="to" class="validate"/>
                                 <label for="to" data-error="wrong" data-success="right">To</label>
                             </div>
                         </div>

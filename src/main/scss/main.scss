@@ -5,6 +5,7 @@ $tab-color-active: $primary-color;
 
 body {
   font: 100% $font-stack;
+  overflow: hidden;
 }
 
 .auth0-lock-form input {
@@ -12,6 +13,10 @@ body {
   border: none!important;
   -webkit-box-shadow: none!important;
   box-shadow: none!important;
+}
+
+.input-field > label:after {
+  display: none!important;
 }
 
 #loading {
@@ -31,18 +36,29 @@ body {
   padding-top: 70px;
 }
 
+#offers {
+  img {
+    max-width: 300px;
+  }
+}
+
 nav {
   position: fixed;
   z-index: 999;
   background-color: $primary-color;
   padding-left: 18px;
 
-  .brand-logo > img {
-    width: 42px;
-    margin-right: 12px;
-    position: relative;
-    top: 10px;
-    vertical-align: top;
+  .brand-logo {
+    overflow: hidden;
+    white-space: nowrap;
+
+    > img {
+      width: 42px;
+      margin-right: 12px;
+      position: relative;
+      top: 10px;
+      vertical-align: top;
+    }
   }
 
   > .nav-wrapper > ul {
@@ -64,6 +80,24 @@ nav {
       top: 10px;
       border-radius: 180px;
       width: 42px;
+    }
+  }
+
+  .side-nav {
+    li {
+      color: black;
+      font-size: 125%;
+
+      &:first-child {
+        background: $primary-color;
+        a {
+          height: 60px;
+          line-height: 60px;
+          font-size: 17px;
+          color: white;
+          font-weight: bold;
+        }
+      }
     }
   }
 }
@@ -114,5 +148,20 @@ nav {
     width: 100%;
     background: rgba(0,0,0,0.4);
     padding: 12px 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  nav {
+    padding-left: 0;
+    .brand-logo > img {
+      top: 6px;
+    }
+  }
+}
+
+@media only screen and (min-height: 640px) {
+  #offers {
+    padding-top: 100px;
   }
 }
