@@ -31,8 +31,8 @@ application = new Vue({
     }
 });
 
-var href = window.location.href;
-var token = href.substring(href.indexOf("=")+1,href.indexOf("&"));
+href = window.location.href;
+token = href.substring(href.indexOf("=")+1,href.indexOf("&"));
 
 // Initializing our Auth0Lock
 var lock = new Auth0Lock(

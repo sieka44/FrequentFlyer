@@ -40,10 +40,8 @@
             <div class = "col s12">
                 <ul class = "tabs">
                     <li class = "tab col"><a class = "active" href = "#home">Homepage</a></li>
-                    <li class = "tab col"><a href = "#profile">
-                        Profile</a></li>
-                    <li class = "tab col"><a href = "#offers">
-                        Offers</a></li>
+                    <li class = "tab col"><a id="profileTab" href = "#profile">Profile</a></li>
+                    <li class = "tab col"><a href = "#offers">Offers</a></li>
                     <li class = "tab col"><a href = "#ticket">+Add ticket</a></li>
                     <li class = "tab col"><a href class="logoutButton" onclick="window.location = '/logout'">Logout</a></li>
                 </ul>
@@ -105,16 +103,20 @@
                 <div class="col s2">
                     <img class="avatar" :src=user.picture style="width: 100%;"/>
                 </div>
-                <form class="col s10">
+                <form method="post" action="./api/v1/updateProfile" class="col s10">
                     <div class="row">
+                        <input type="hidden" name="token" :value="token"/>
                         <div class="input-field col s12">
-                            <input id="name" class="validate" type="text" :value="user.hasPersonalData?user.name:''"/>
+                            <input id="name" name="name" class="validate" type="text" :value="user.hasPersonalData?user.name:''"/>
                             <label for="name" data-error="wrong" data-success="right">Name</label>
                         </div>
                         <div class="input-field col s12">
-                            <input id="address" class="validate" type="text" :value="user.address"/>
+                            <input id="address" name="address" class="validate" type="text" :value="user.address"/>
                             <label for="address" data-error="wrong" data-success="right">Address</label>
                         </div>
+                        <button class="btn waves-effect waves-light right" type="submit">Save
+                            <i class="material-icons right">send</i>
+                        </button>
                     </div>
                 </form>
             </div>

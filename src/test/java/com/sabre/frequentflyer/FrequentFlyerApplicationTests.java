@@ -6,13 +6,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.pagefactory.ByChained;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = FrequentFlyerApplication.class)
@@ -44,6 +48,27 @@ public class FrequentFlyerApplicationTests {
         driver.get("http://localhost:8080");
         doLogin();
         driver.findElement(TABS_LOGOUT).click();
+    }
+
+    @Test
+    public void changingPersonalData() {
+        driver.get("http://localhost:8080");
+        doLogin();
+        driver.findElement(By.id("profileTab")).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("name")));
+
+        WebElement nameInput = driver.findElement(By.id("name"));
+        nameInput.clear();
+        nameInput.sendKeys("Flights Administrator");
+
+        WebElement addressInput = driver.findElement(By.id("address"));
+        addressInput.clear();
+        addressInput.sendKeys("Br St. 11, 87-100 Thorn");
+
+        driver.findElement(By.tagName("button")).click();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("name")));
+        assertEquals(driver.findElement(By.id("name")).getText(), ("Flights Administrator"));
     }
 
     @After
