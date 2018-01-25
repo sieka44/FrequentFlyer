@@ -1,0 +1,171 @@
+$font-stack: Roboto, sans-serif;
+$primary-color: #434343;
+$tab-color: #292929;
+$tab-color-active: $primary-color;
+
+body {
+  font: 100% $font-stack;
+  overflow: hidden;
+}
+
+.auth0-lock-form input {
+  margin: 0!important;
+  border: none!important;
+  -webkit-box-shadow: none!important;
+  box-shadow: none!important;
+}
+
+.input-field > label:after {
+  display: none!important;
+}
+
+#loading {
+  padding: 20% 48%;
+}
+
+[v-cloak], #app:not([loaded]) > #main,
+[loaded] #loading {
+  display: none;
+}
+
+#dropdown1 {
+  top: 64px;
+}
+
+#main {
+  padding-top: 70px;
+}
+
+#offers {
+  img {
+    max-width: 300px;
+  }
+}
+
+#profile .btn {
+  margin: 12px;
+}
+
+nav {
+  position: fixed;
+  z-index: 999;
+  background-color: $primary-color;
+  padding-left: 18px;
+
+  .brand-logo {
+    overflow: hidden;
+    white-space: nowrap;
+
+    > img {
+      width: 42px;
+      margin-right: 12px;
+      position: relative;
+      top: 10px;
+      vertical-align: top;
+    }
+  }
+
+  > .nav-wrapper > ul {
+    > li, a.dropdown-button {
+      height: 60px;
+    }
+
+    a.dropdown-button:hover {
+      height: 64px;
+    }
+
+    span {
+      vertical-align: top;
+      margin-left: 10px;
+    }
+
+    .avatar {
+      position: relative;
+      top: 10px;
+      border-radius: 180px;
+      width: 42px;
+    }
+  }
+
+  .side-nav {
+    li {
+      color: black;
+      font-size: 125%;
+
+      &:first-child {
+        background: $primary-color;
+        a {
+          height: 60px;
+          line-height: 60px;
+          font-size: 17px;
+          color: white;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+
+.tabs {
+  margin-top: 15px;
+  margin-bottom: 20px;
+
+  li {
+    &.tab {
+      width: 20%;
+
+      a {
+        color: $tab-color;
+
+        &:hover, &.active {
+          color: $tab-color-active;
+        }
+      }
+    }
+
+    &.indicator {
+      background-color: $tab-color-active;
+    }
+  }
+}
+
+#home {
+  #status {
+    width: 120px;
+
+    img { width: 100%; }
+    display: inline;
+    position: relative;
+    top: 10px;
+    right: 5px;
+  }
+
+  #prog-desc {
+    width: calc(100% - 128px);
+  }
+
+  h3 {
+    display: inline;
+  }
+
+  .card .card-image .card-title {
+    width: 100%;
+    background: rgba(0,0,0,0.4);
+    padding: 12px 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  nav {
+    padding-left: 0;
+    .brand-logo > img {
+      top: 6px;
+    }
+  }
+}
+
+@media only screen and (min-height: 640px) {
+  #offers {
+    padding-top: 100px;
+  }
+}
