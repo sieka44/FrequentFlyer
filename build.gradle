@@ -31,6 +31,8 @@ sass {
 group = 'com.sabre'
 version = '0.0.1-alpha'
 sourceCompatibility = 1.8
+ext.junitVersion = '4.12'
+ext.seleniumVersion = '2.53.1'
 
 compileJava.dependsOn(processResources)
 
@@ -50,6 +52,12 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compileOnly('org.projectlombok:lombok')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile group: 'junit', name: 'junit', version: junitVersion
+    testCompile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version:seleniumVersion
+    testCompile group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version:seleniumVersion
+    testCompile group: 'org.seleniumhq.selenium', name: 'selenium-api', version:seleniumVersion
+    testCompile group: 'org.seleniumhq.selenium', name: 'selenium-java', version:seleniumVersion
+    
 }
 
 apply plugin: "idea"
