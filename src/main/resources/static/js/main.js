@@ -54,11 +54,23 @@ getUserData = function(profile) {
         picture: profile.picture,
         name: profile.name,
         hasPersonalData: (profile.given_name !== null),
-        address: profile.address
+        address: profile.address,
+        userId: profile.sub
     };
     application.$forceUpdate();
     loadStep();
 };
+
+function patch_metadata(string) {
+    profile = JSON.parse(localStorage.getItem('profile'));
+    patch = JSON.parse(string);
+
+    for(entry in patch["user_metadata"]) {
+        profile[entry] = patch["user_metadata"][entry];
+    }
+
+    localStorage.setItem('profile', JSON.stringify(profile));
+}
 
 // Listening for the authenticated event
 lock.on("authenticated", function(authResult) {
@@ -105,3 +117,21 @@ function logout () {
 }
 
 $(".button-collapse").sideNav();
+
+$('#profileForm').submit(function(e) {
+    console.log($("#profileForm").serialize());
+    $.ajax({
+        type: "POST",
+        url: "./api/v1/updateProfile",
+        data: $("#profileForm").serialize(), // serializes the form's elements.
+        success: function(data)
+        {
+            patch_metadata(data);
+            Materialize.toast('Successfully updated your profile!', 4000);
+        },
+        error: function (error) {
+            Materialize.toast('Error! '+error, 4000);
+        }
+    });
+    e.preventDefault(); // avoid to execute the actual submit of the form.
+});

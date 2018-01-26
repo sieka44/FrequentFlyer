@@ -19,11 +19,12 @@ public class UserDataController {
     }
 
     @RequestMapping(value = "/api/v1/updateProfile", method = RequestMethod.POST)
-    public RedirectView updateProfile(@RequestParam String userId,
-                                      @RequestParam String name,
-                                      @RequestParam String address) {
-        ManagementApiController.updateUser(userId, name, address);
-        return new RedirectView("/");
+    @ResponseBody
+    public String updateProfile(@RequestParam String userId,
+                                @RequestParam String name,
+                                @RequestParam String address) {
+        System.out.println(address);
+        return ManagementApiController.updateUser(userId, name, address);
     }
 
     @RequestMapping(value = "/api/v1/addTicket", method = RequestMethod.POST)
