@@ -1,17 +1,14 @@
 package com.sabre.frequentflyer;
 
-import com.mashape.unirest.http.exceptions.UnirestException;
 import com.sabre.frequentflyer.api.APIController;
-import com.sabre.frequentflyer.api.Coordinates;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.io.IOException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
@@ -23,9 +20,10 @@ public class APITest {
         Assert.assertNotNull(APIController.getAccessToken());
     }
 
-    @Test
-    public void getCoordinatesTest() {
-        Assert.assertNotNull(APIController.getCoordinates("KRK", "ATL"));
+    @Test(expected = JSONException.class)
+    public void getWrongDistanceTest() {
+        int distance = APIController.getDistance("NO", "NO");
+        Assert.assertEquals(java.util.Optional.of(0.0), distance);
     }
 
     @Test
@@ -61,10 +59,10 @@ public class APITest {
     }
 
     @Test
-    public void getDistanceTest() throws IOException, UnirestException {
-        Coordinates[] coordinates = APIController.getCoordinates("KRK", "ATL");
-        System.out.println(APIController.getDistance(coordinates) + " km");
-        System.out.println((double) (8110 - 2) < APIController.getDistance(coordinates) && APIController.getDistance(coordinates) < (double) (8110 + 2));
+    public void getDistanceTest() {
+        int distance = APIController.getDistance("KRK", "ATL");
+        System.out.println("Distance:" + distance);
+        Assert.assertTrue("Error", (8108 - 2) < distance && distance < (8108 + 2));
     }
 
 }

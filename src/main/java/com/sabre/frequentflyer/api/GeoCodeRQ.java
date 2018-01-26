@@ -2,9 +2,11 @@ package com.sabre.frequentflyer.api;
 
 public class GeoCodeRQ {
     String cityName;
-    public GeoCodeRQ(String cityName){
+
+    public GeoCodeRQ(String cityName) {
         this.cityName = cityName;
     }
+
     @Override
     public String toString() {
         return "{\n" +

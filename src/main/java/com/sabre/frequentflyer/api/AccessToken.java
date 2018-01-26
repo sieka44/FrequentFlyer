@@ -31,6 +31,7 @@ public final class AccessToken {
 
     @Override
     public String toString() {
-        return access_token+ "\n " +token_type+"\n "+ expires_in;
+        return access_token + "\n " + token_type + "\n " + expires_in;
     }
+
 }

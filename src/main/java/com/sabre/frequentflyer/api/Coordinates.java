@@ -5,7 +5,7 @@ public class Coordinates {
     private double latitude;
     private double longitude;
 
-    Coordinates(String name, double latitude, double longitude){
+    Coordinates(String name, double latitude, double longitude) {
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;

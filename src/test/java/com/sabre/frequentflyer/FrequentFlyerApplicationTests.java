@@ -9,7 +9,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.pagefactory.ByChained;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,7 +28,7 @@ public class FrequentFlyerApplicationTests {
     private final static ByChained TABS_LOGOUT = new ByChained(By.className("tabs"), By.className("logoutButton"));
 
     @Before
-    public void	before(){
+    public void before() {
         System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
         driver = new ChromeDriver();
         wait = new WebDriverWait(driver, 15);
@@ -72,7 +71,7 @@ public class FrequentFlyerApplicationTests {
     }
 
     @After
-    public void after(){
+    public void after() {
         driver.close();
     }
 }

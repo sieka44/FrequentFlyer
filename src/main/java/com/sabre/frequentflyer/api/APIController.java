@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
+
 public class APIController {
     private static final String ACCESS_TOKEN_URL = "https://api-crt.cert.havail.sabre.com/v2/auth/token";
     private static final String GET_COORDINATES_URL
@@ -28,12 +29,12 @@ public class APIController {
         return accessToken;
     }
 
-    private static String createTokenCredentials(){
+    private static String createTokenCredentials() {
         final byte[] domainBytes = DOMAIN.getBytes(StandardCharsets.UTF_8);
         final byte[] secretBytes = CLIENT_SECRET.getBytes(StandardCharsets.UTF_8);
 
         String outcome = Base64.getEncoder().encodeToString(domainBytes) + ":" +
-                            Base64.getEncoder().encodeToString(secretBytes);
+                Base64.getEncoder().encodeToString(secretBytes);
         return Base64.getEncoder().encodeToString(outcome.getBytes());
     }
 
@@ -47,7 +48,7 @@ public class APIController {
                     .header("grant_type", "client_credentials")
                     .header("cache-control", "no-cache").asString();
             ObjectMapper mapper = new ObjectMapper();
-            accessToken = mapper.readValue(response.getBody(),AccessToken.class);
+            accessToken = mapper.readValue(response.getBody(), AccessToken.class);
         } catch (UnirestException | IOException e) {
             e.printStackTrace();
         }
@@ -57,42 +58,42 @@ public class APIController {
         refreshToken();
     }
 
-    public static Coordinates[] getCoordinates(String city1, String city2) {
-        if (accessToken==null) {
+    public static int getDistance(String city1, String city2) {
+        if (accessToken == null) {
             refreshToken();
         }
-
         HttpResponse<String> response = null;
         try {
             response = Unirest.post(GET_COORDINATES_URL)
-                    .header("authorization", "Bearer "+accessToken.getAccess_token())
+                    .header("authorization", "Bearer " + accessToken.getAccess_token())
                     .header("content-type", "application/json")
                     .header("cache-control", "no-cache")
-                    .body("["+new GeoCodeRQ(city1).toString()+",\n"+new GeoCodeRQ(city2).toString()+"]")
+                    .body("[" + new GeoCodeRQ(city1).toString() + ",\n" + new GeoCodeRQ(city2).toString() + "]")
                     .asString();
+            Unirest.setTimeouts(0, 0);
             JSONObject json = new JSONObject(response.getBody());
             JSONArray posts = (JSONArray) json.get("Results");
             Coordinates[] coordinates = new Coordinates[2];
-            for (int i = 0; i<posts.length();i++) {
+            for (int i = 0; i < posts.length(); i++) {
                 JSONArray arr = posts.getJSONObject(i).getJSONObject("GeoCodeRS").getJSONArray("Place");
                 System.out.println(arr.toString());
                 String name = arr.getJSONObject(0).getString("City");
                 double x = arr.getJSONObject(0).getDouble("latitude");
                 double y = arr.getJSONObject(0).getDouble("longitude");
-                coordinates[i]=new Coordinates(name,x,y);
+                coordinates[i] = new Coordinates(name, x, y);
             }
-            return coordinates;
+            return getMiles(coordinates);
         } catch (UnirestException e) {
             e.printStackTrace();
             accessToken = null;
         }
-        return null;
+        return 0;
     }
 
-    public static double getDistance(Coordinates[] coordinates){
-        return new HaversineFormula().distance(
-                coordinates[0].getLatitude(),coordinates[0].getLongitude(),
-                coordinates[1].getLatitude(),coordinates[1].getLongitude()
+    public static int getMiles(Coordinates[] coordinates) {
+        return HaversineFormula.distance(
+                coordinates[0].getLatitude(), coordinates[0].getLongitude(),
+                coordinates[1].getLatitude(), coordinates[1].getLongitude()
         );
     }
 }

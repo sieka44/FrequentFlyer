@@ -10,6 +10,8 @@ public class Ticket {
     private String fClass;
     private String fType;
     private Date date;
+    private Double distance;
+
 
     public Ticket(String fromId, String toId, String carrierID, int flightId, String fClass, String fType, Date date) {
         this.fromId = fromId;
@@ -19,7 +21,7 @@ public class Ticket {
         this.fClass = fClass;
         this.fType = fType;
         this.date = date;
-
+        distance = 0.0;
     }
 
     public String getFromId() {
@@ -49,6 +51,11 @@ public class Ticket {
     public Date getDate() {
         return date;
     }
+
+    public void setDistance(Double distance) {
+        this.distance = distance;
+    }
+
 }
 
 /*
