@@ -15,10 +15,6 @@ body {
   box-shadow: none!important;
 }
 
-.input-field > label:after {
-  display: none!important;
-}
-
 #loading {
   padding: 20% 48%;
 }
@@ -42,8 +38,29 @@ body {
   }
 }
 
-#profile .btn {
-  margin: 12px;
+#profile {
+  .btn {
+    margin: 12px;
+  }
+  .input-field {
+    margin: 5% 5px;
+  }
+
+  input {
+    border-bottom: 1px solid #4CAF50;
+    -webkit-box-shadow: 0 1px 0 0 #4CAF50;
+    box-shadow: 0 1px 0 0 #4CAF50;
+
+    &.error {
+      border-bottom: 1px solid #F44336;
+      -webkit-box-shadow: 0 1px 0 0 #F44336;
+      box-shadow: 0 1px 0 0 #F44336;
+    }
+  }
+}
+
+ul.ui-autocomplete > li.ui-menu-item > div.ui-menu-item-wrapper {
+  padding: 10px 1em 10px 1em;
 }
 
 nav {

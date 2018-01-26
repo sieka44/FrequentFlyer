@@ -119,19 +119,73 @@ function logout () {
 $(".button-collapse").sideNav();
 
 $('#profileForm').submit(function(e) {
-    console.log($("#profileForm").serialize());
-    $.ajax({
-        type: "POST",
-        url: "./api/v1/updateProfile",
-        data: $("#profileForm").serialize(), // serializes the form's elements.
-        success: function(data)
-        {
-            patch_metadata(data);
-            Materialize.toast('Successfully updated your profile!', 4000);
-        },
-        error: function (error) {
-            Materialize.toast('Error! '+error, 4000);
+    e.preventDefault();
+}).validate({
+    rules: {
+        name: {
+            required: true,
+            correctName: true,
         }
-    });
-    e.preventDefault(); // avoid to execute the actual submit of the form.
+    },
+    messages: {
+        name: "Please enter your given and family name"
+    },
+    errorElement : 'div',
+    errorPlacement: function(error, element) {
+        let placement = $(element).data('error');
+        if (placement) {
+            $(placement).append(error)
+        } else {
+            error.insertAfter(element);
+        }
+    },
+
+    submitHandler: function(form){
+        $.ajax({
+            type: "POST",
+            url: "./api/v1/updateProfile",
+            data: $(form).serialize(), // serializes the form's elements.
+            success: function(data)
+            {
+                patch_metadata(data);
+                Materialize.toast('Successfully updated your profile!', 4000);
+            },
+            error: function (error) {
+                Materialize.toast('Error! '+error, 4000);
+            }
+        });
+    }
 });
+
+$('input.autocomplete').autocomplete({
+    source: [
+        "Cracow", "New York City"
+    ],
+    limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
+    onAutocomplete: function(val) {
+        // Callback function when value is autcompleted.
+    },
+    minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
+});
+$('.datepicker').pickadate({
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 15, // Creates a dropdown of 15 years to control year,
+    today: 'Today',
+    clear: 'Clear',
+    close: 'Ok',
+    closeOnSelect: false // Close upon selecting a date,
+});
+
+$.validator.addMethod("correctName", function(str){
+        res = str.split(" ");
+        if (res.length !== 2) return false;
+        for (i=0; i<2; i++) {
+            if (res[i].length < 3) return false;
+            if (res[i][0] !== res[i][0].toUpperCase()) return false;
+            for (j=1; j<res[i].length; j++) {
+                if (res[i][j] !== res[i][j].toLowerCase()) return false;
+            }
+            if (!/^[\u0080-\u0290\w]+$/g.test(res[i])) return false;
+        }
+        return true;
+    });

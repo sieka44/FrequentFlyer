@@ -100,19 +100,21 @@
                 </div>
             </div>
             <div id="profile" class="col s12 active" style="">
-                <div class="col s2">
+                <div class="col s4 l3">
                     <img class="avatar" :src=user.picture style="width: 100%;"/>
                 </div>
-                <form method="post" action="./api/v1/updateProfile" class="col s10">
+                <form id="profileForm" class="col s8 l9">
                     <div class="row">
-                        <input type="hidden" name="token" v-model="token"/>
+                        <input type="hidden" name="userId" v-model="user.userId"/>
                         <div class="input-field col s12">
-                            <input id="name" name="name" class="validate" type="text" :value="user.hasPersonalData?user.name:''"/>
-                            <label for="name" :class="user.hasPersonalData?'active':''" data-error="wrong" data-success="right">Name</label>
+                            <i class="material-icons prefix">account_circle</i>
+                            <input id="name" name="name" type="text" :value="user.hasPersonalData?user.name:''"/>
+                            <label for="name" :class="user.hasPersonalData?'active':''">Name</label>
                         </div>
                         <div class="input-field col s12">
-                            <input id="address" name="address" class="validate" type="text" :value="user.address"/>
-                            <label for="address" :class="user.address?'active':''" data-error="wrong" data-success="right">Address</label>
+                            <i class="material-icons prefix">location_city</i>
+                            <input id="address" name="address" type="text" :value="user.address"/>
+                            <label for="address" :class="user.address?'active':''">Address</label>
                         </div>
                         <button class="btn waves-effect waves-light right" type="submit">Save
                             <i class="material-icons right">send</i>
@@ -127,15 +129,29 @@
             </div>
             <div id = "ticket" class = "col s12">
                 <div class="row">
-                    <form class="col s12 m6">
+                    <form class="col s12">
                         <div class="row">
-                            <div class="input-field col s12">
-                                <input id="from" class="validate"/>
-                                <label for="from" data-error="wrong" data-success="right">From</label>
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">location_city</i>
+                                <input type="text" id="from" class="autocomplete">
+                                <label for="from">From</label>
                             </div>
-                            <div class="input-field col s12">
-                                <input id="to" class="validate"/>
-                                <label for="to" data-error="wrong" data-success="right">To</label>
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">location_city</i>
+                                <input type="text" id="to" class="autocomplete"/>
+                                <label for="to">To</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">date_range</i>
+                                <input id="datefrom" type="text" class="datepicker"/>
+                                <label for="datefrom" >Date</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">date_range</i>
+                                <input id="dateto" type="text" class="datepicker"/>
+                                <label for="dateto" >Date</label>
                             </div>
                         </div>
                     </form>
@@ -162,6 +178,7 @@
 <script type="text/javascript" src="js/lib/vue.min.js"></script>
 <script type="text/javascript" src="js/lib/vue-resource.min.js"></script>
 <script type="text/javascript" src="js/lib/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="js/lib/jquery.validate.min.js"></script>
 <script type="text/javascript" src="js/lib/jquery-ui.min.js"></script>
 <script type="text/javascript" src="js/lib/materialize.min.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
