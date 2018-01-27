@@ -43,7 +43,7 @@
                     <li class = "tab col"><a id="profileTab" href = "#profile">Profile</a></li>
                     <li class = "tab col"><a href = "#offers">Offers</a></li>
                     <li class = "tab col"><a href = "#ticket">+Add ticket</a></li>
-                    <li class = "tab col"><a href class="logoutButton" onclick="window.location = '/logout'">Logout</a></li>
+                    <li class = "tab col"><a href class="logoutButton" onclick="logout()'">Logout</a></li>
                 </ul>
             </div>
 
@@ -119,6 +119,9 @@
                         <button class="btn waves-effect waves-light right" type="submit">Save
                             <i class="material-icons right">send</i>
                         </button>
+                        <button class="btn waves-effect waves-light red right" id="resetPass">Reset password
+                            <i class="material-icons right">lock_open</i>
+                        </button>
                     </div>
                 </form>
             </div>
@@ -146,12 +149,55 @@
                             <div class="input-field col s12 m6">
                                 <i class="material-icons prefix">date_range</i>
                                 <input id="datefrom" type="text" class="datepicker"/>
-                                <label for="datefrom" >Date</label>
+                                <label for="datefrom" >Departure</label>
                             </div>
                             <div class="input-field col s12 m6">
                                 <i class="material-icons prefix">date_range</i>
                                 <input id="dateto" type="text" class="datepicker"/>
-                                <label for="dateto" >Date</label>
+                                <label for="dateto" >Arrival</label>
+                            </div>
+                        </div>
+                        <div class="row checkboxes">
+                            <div class="col s12 m6">
+                                <div class="input-field">
+                                    <i class="material-icons prefix">event_seat</i>
+                                    <input disabled id="sc"/>
+                                    <label for="sc">Seat class:</label>
+                                </div>
+                                <p>
+                                    <input class="with-gap" name="seat_class" value="economy" type="radio" id="e"  />
+                                    <label for="e">Economy Class</label>
+                                </p>
+                                <p>
+                                    <input class="with-gap" name="seat_class" value="premium-economy" type="radio" id="pe"  />
+                                    <label for="pe">Premium Economy Class</label>
+                                </p>
+                                <p>
+                                    <input class="with-gap" name="seat_class" value="business" type="radio" id="b"  />
+                                    <label for="b">Business Class</label>
+                                </p>
+                                <p>
+                                    <input class="with-gap" name="seat_class" value="first" type="radio" id="f"  />
+                                    <label for="f">First Class</label>
+                                </p>
+                            </div>
+                            <div class="col s12 m6">
+                                <div class="input-field">
+                                    <i class="material-icons prefix">event_seat</i>
+                                    <input disabled id="tt"/>
+                                    <label for="tt">Ticket type:</label>
+                                </div>
+                                <p>
+                                    <input class="with-gap" name="ticket_type" value="oneway" type="radio" id="ow"  />
+                                    <label for="ow">One-way</label>
+                                </p>
+                                <p>
+                                    <input class="with-gap" name="ticket_type" value="roundtrip" type="radio" id="rt"  />
+                                    <label for="rt">Round trip</label>
+                                </p>
+                                <button class="btn waves-effect waves-light right" type="submit">Add
+                                    <i class="material-icons right">add</i>
+                                </button>
                             </div>
                         </div>
                     </form>

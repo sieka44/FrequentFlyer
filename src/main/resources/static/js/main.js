@@ -51,6 +51,7 @@ var lock = new Auth0Lock(
 
 getUserData = function(profile) {
     application.user = {
+        email: profile.email,
         picture: profile.picture,
         name: profile.name,
         hasPersonalData: (profile.given_name !== null),
@@ -157,6 +158,22 @@ $('#profileForm').submit(function(e) {
     }
 });
 
+$("#resetPass").click(function (e) {
+    $.ajax({
+        type: "GET",
+        url: "https://frequent-flyer.eu.auth0.com/dbconnections/change_password?"+
+            "connection=Username-Password-Authentication&email="+application.user.email,
+        success: function(data)
+        {
+            Materialize.toast(data, 4000);
+        },
+        error: function (error) {
+            Materialize.toast('Error! '+error, 4000);
+        }
+    });
+    e.preventDefault();
+});
+
 $('input.autocomplete').autocomplete({
     source: [
         "Cracow", "New York City"
@@ -173,7 +190,7 @@ $('.datepicker').pickadate({
     today: 'Today',
     clear: 'Clear',
     close: 'Ok',
-    closeOnSelect: false // Close upon selecting a date,
+    closeOnSelect: true // Close upon selecting a date,
 });
 
 $.validator.addMethod("correctName", function(str){
