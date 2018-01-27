@@ -64,8 +64,22 @@ body {
   margin-top: 10px;
 }
 
-.checkboxes p {
-  margin-left: 35px;
+.checkboxes {
+  p {
+    margin-left: 35px;
+  }
+  .btn {
+    margin-top: 35px;
+  }
+}
+
+.card.small {
+  height: 260px;
+}
+.card .card-image img {
+  width: 50%;
+  height: 160px;
+  float: left;
 }
 
 ul.ui-autocomplete > li.ui-menu-item > div.ui-menu-item-wrapper {

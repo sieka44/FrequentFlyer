@@ -206,3 +206,14 @@ $.validator.addMethod("correctName", function(str){
         }
         return true;
     });
+
+$('input:radio[name="ticket_type"]').change(
+    function(){
+        if (this.checked && this.value == 'roundtrip') {
+            $("#datefrom").parent().removeClass("m12").addClass("m6", 100);
+            $("#dateto").parent().removeClass("hide", 100).show("slide", { direction: "left" }, 300);
+        } else {
+            $("#dateto").parent().addClass("hide");
+            $("#datefrom").parent().removeClass("m6").addClass("m12");
+        }
+    });
