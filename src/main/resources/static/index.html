@@ -94,12 +94,12 @@
                         <input type="hidden" name="userId" v-model="user.userId"/>
                         <div class="input-field col s12">
                             <i class="material-icons prefix">account_circle</i>
-                            <input id="name" name="name" type="text" :value="user.hasPersonalData?user.name:''"/>
+                            <input class="validate" id="name" name="name" type="text" :value="user.hasPersonalData?user.name:''"/>
                             <label for="name" :class="user.hasPersonalData?'active':''">Name</label>
                         </div>
                         <div class="input-field col s12">
                             <i class="material-icons prefix">location_city</i>
-                            <input id="address" name="address" type="text" :value="user.address"/>
+                            <input class="validate" id="address" name="address" type="text" :value="user.address"/>
                             <label for="address" :class="user.address?'active':''">Address</label>
                         </div>
                         <button class="btn waves-effect waves-light right" type="submit">Save
@@ -140,12 +140,12 @@
                         <div class="row">
                             <div class="input-field col s12 m12">
                                 <i class="material-icons prefix">date_range</i>
-                                <input id="departureDate" name="departureDate" type="text" class="datepicker"/>
+                                <input id="departureDate" name="departureDate" type="text" class="validate datepicker"/>
                                 <label for="departureDate" >Departure</label>
                             </div>
                             <div class="input-field col s12 m6 hide">
                                 <i class="material-icons prefix">date_range</i>
-                                <input id="returnDate" name="returnDate" type="text" class="datepicker"/>
+                                <input id="returnDate" name="returnDate" type="text" class="validate datepicker"/>
                                 <label for="returnDate" >Return</label>
                             </div>
                         </div>

@@ -144,21 +144,9 @@ $('#profileForm').submit(function(e) {
     messages: {
         name: "Please enter your given and family name"
     },
-    errorElement : 'div',
+    errorClass: "invalid",
     errorPlacement: function(error, element) {
-        let placement = $(element).data('error');
-        if (placement) {
-            $(placement).append(error);
-        } else {
-            error.insertAfter(element);
-        }
-    },
-
-    highlight: function(element) {
-        $(element).removeClass('ok');
-    },
-    unhighlight: function(element) {
-        $(element).addClass('ok');
+        $("+ label", element).addClass("active").attr('data-error', error[0].innerText);
     },
 
     submitHandler: function(form){
@@ -212,7 +200,11 @@ citySources = {
     "Warsaw": "WAW",
     "Frankfurt": "FRA",
     "New York Newark": "EWR",
-    "London": "LHR"
+    "London": "LHR",
+    "Munich": "MUC",
+    "Dubai": "DXB",
+    "Melbourne": "MEL",
+    "Perth": "PER"
 };
 
 getCityName = function(id) {
