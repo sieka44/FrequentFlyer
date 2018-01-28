@@ -17,7 +17,7 @@ public class DbTest {
     @Before
     public void init() {
         database = new DbController();
-        database.loadDbData("C:/Users/Kamil/Desktop/TMP/sabre/sabre_Zax37_sieka44/src/test/java/com/sabre/frequentflyer/Test.csv");
+        database.loadDbData("Test.csv");
     }
 
     @Test

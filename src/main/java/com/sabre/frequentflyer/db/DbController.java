@@ -3,8 +3,8 @@ package com.sabre.frequentflyer.db;
 import org.apache.commons.collections.map.MultiValueMap;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,7 +27,8 @@ public class DbController {
         BufferedReader br = null;
         String line;
         try {
-            br = new BufferedReader(new FileReader(fileName));
+            br = new BufferedReader(new InputStreamReader(
+                    this.getClass().getResourceAsStream("/" + fileName)));
             while ((line = br.readLine()) != null && !(line.equals("//*//"))) {
                 String[] data = line.split(";");
                 if (data.length < 10) continue;
