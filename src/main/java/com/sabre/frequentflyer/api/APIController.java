@@ -25,8 +25,6 @@ public class APIController {
      * -- GETTER --
      * Returns <code>String</code> object that can be used to connect with
      * GeoCode API.
-     *
-     * @return returns String object with the access token
      */
     @Getter
     private static AccessToken accessToken;
@@ -34,7 +32,8 @@ public class APIController {
     /**
      * This is a utility class, not designed for instantiation.
      */
-    private APIController() { }
+    private APIController() {
+    }
 
     /**
      * Returns <code>String</code> object with encoded client secret and
@@ -72,9 +71,6 @@ public class APIController {
         }
     }
 
-    /**
-     * Refreshes token when application is started.
-     */
     static {
         refreshToken();
     }
@@ -87,8 +83,6 @@ public class APIController {
      * @param airport2 three-letter identifier of second airport
      * @return 0 if any of <code>Exception</code> occurred, otherwise returns distance between <code>airport1</code>
      * and <code>airport2</code>.
-     * @throws UnirestException if unirest cannot connect with given API url.
-     * @throws JSONException    if response mismatch with expected result, then refresh access token.
      * @see <a href="https://developer.sabre.com/docs/read/rest_apis/utility/geo_code/">How to use GeoCode</a>
      */
     public static int getDistance(String airport1, String airport2) {
@@ -98,7 +92,7 @@ public class APIController {
         HttpResponse<String> response = null;
         try {
             response = Unirest.post(GET_COORDINATES_URL)
-                    .header("authorization", "Bearer " + accessToken.getAccessToken())
+                    .header("authorization", "Bearer " + accessToken.getAccess_token())
                     .header("content-type", "application/json")
                     .header("cache-control", "no-cache")
                     .body("[" + new GeoCodeRQ(airport1).toString() + ",\n" + new GeoCodeRQ(airport2).toString() + "]")

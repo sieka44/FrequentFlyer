@@ -1,9 +1,9 @@
 package com.sabre.frequentflyer.api;
 
 public class GeoCodeRQ {
-    String cityName;
+    private String cityName;
 
-    public GeoCodeRQ(String cityName) {
+    GeoCodeRQ(String cityName) {
         this.cityName = cityName;
     }
 

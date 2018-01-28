@@ -24,7 +24,7 @@ public class UserDataController {
     /**
      * Checks user status based on miles he traveled
      * @param userId  id of authored user logged in by Auth0
-     * @return <code>ResponsEntity</code> with <code>String</code> of the current status
+     * @return <code>ResponseEntity</code> with <code>String</code> of the current status
      */
     @RequestMapping(value = "/api/v1/getUserStatus", method = RequestMethod.GET)
     @ResponseBody
@@ -63,6 +63,7 @@ public class UserDataController {
      * @param departureDate date of departure
      * @param returnDate    if flight type is <code>roundTrip</code>, it is date of return flight
      * @return <code>String</code> with updated user metadata
+     * @throws ParseException if <code>DataFormat</code> is not supported
      */
     @RequestMapping(value = "/api/v1/addTicket", method = RequestMethod.POST)
     @ResponseBody

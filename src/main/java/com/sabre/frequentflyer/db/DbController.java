@@ -8,14 +8,15 @@ import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Collection;
+import java.util.Date;
 
 public class DbController {
     MultiValueMap tickets;
 
     /**
      * Constructor which creates new <code>MultiValueMap</code> and load tickets from file
+     *
      * @param filename csv file with mock tickets data
      */
     public DbController(String filename) {
@@ -25,13 +26,19 @@ public class DbController {
 
     /**
      * Adds ticket to map with key user email and value as <code>new Ticket</code>
+     *
      * @param userMail email of logged in user
-     * @param ticket ticket which we want to add to database
+     * @param ticket   ticket which we want to add to database
      */
     public void addTicket(String userMail, Ticket ticket) {
         tickets.put(userMail, ticket);
     }
 
+    /**
+     * Loads data from .csv file
+     *
+     * @param fileName path to file with data
+     */
     private void loadDbData(String fileName) {
         BufferedReader br = null;
         String line;
@@ -65,6 +72,12 @@ public class DbController {
         }
     }
 
+    /**
+     * Returns tickets of given user email
+     *
+     * @param email user email
+     * @return tickets of given user
+     */
     public Collection getTickets(String email) {
         return tickets.getCollection(email);
     }

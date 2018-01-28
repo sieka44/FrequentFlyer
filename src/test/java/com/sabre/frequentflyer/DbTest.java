@@ -7,6 +7,7 @@ import com.sabre.frequentflyer.db.DbController;
 import com.sabre.frequentflyer.db.Ticket;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,13 +40,13 @@ public class DbTest {
     }
 
     @Test
-    public void getrefreshToken() throws JSONException, UnirestException {
+    public void getRefreshToken() throws JSONException, UnirestException {
         HttpResponse<String> response = Unirest.post("https://frequent-flyer.eu.auth0.com/oauth/token")
                 .header("content-type", "application/json")
                 .body("{\"client_id\":\"9FI4KE9hAbqGlvlZCt6uGDM7leYaJ0Ro\",\"client_secret\":\"UYYeSicRcqFmdWI3fe9c5hhM6JL00lCeb6rNtHdZY8t500h-SAgUA0hHLD6MF5lD\",\"audience\":\"https://frequent-flyer.eu.auth0.com/api/v2/\",\"grant_type\":\"client_credentials\"}")
                 .asString();
         Unirest.setTimeouts(0, 0);
         JSONObject json = new JSONObject(response.getBody());
-        System.out.println(json.get("access_token").toString());
+        Assert.assertNotNull(json.get("access_token"));
     }
 }

@@ -37,7 +37,7 @@ public class ManagementApiController {
      * @param userID  id of authored user logged in by Auth0
      * @param name    user name which will be saved in user metadata
      * @param address user address which will be saved in user metadata
-     * @return
+     * @return <code>String</code> with response body.
      */
     public static String updateUser(String userID, String name, String address) {
         if (accessToken == null) refreshToken();
@@ -67,9 +67,6 @@ public class ManagementApiController {
      *
      * @param userID id of authored user logged in by Auth0
      * @return 0 if exception has been thrown, otherwise miles of given user
-     * @throws UnirestException             if <code>Unirest</code> cant connect with given endpoint
-     * @throws UnsupportedEncodingException if <code>URLEncoder</code> cannot handle encoding <code>userID</code>
-     * @throws JSONException                if response is different than expected
      */
     public static int getUserMiles(String userID) {
         if (accessToken == null) refreshToken();
@@ -96,8 +93,6 @@ public class ManagementApiController {
      * @param userID id of authored user logged in by Auth0
      * @param miles  amount of miles, which we want to add to the user pot
      * @return Body of response from the API as <code>String</code>, empty if update failure
-     * @throws UnirestException             if <code>Unirest</code> cant connect with given endpoint
-     * @throws UnsupportedEncodingException if <code>URLEncoder</code> cannot handle encoding <code>userID</code>
      */
     public static String updatePoints(String userID, int miles) {
         if (accessToken == null) refreshToken();
@@ -124,14 +119,14 @@ public class ManagementApiController {
      * Checks what is user status
      *
      * @param miles User miles which he currently own
-     * @return current status as <code>String</code>
+     * @return current status as <code>String</code> with format (status;nextStatus;pointsToNext)
      */
     public static String checkStatus(int miles) {
-        if (miles < 1000) return "notFF";
-        else if (miles < 4000) return "bronze";
-        else if (miles < 8000) return "silver";
-        else if (miles < 15000) return "golden";
-        else return "platinum";
+        if (miles < 1000) return "notFF;bronze;"+(1000-miles);
+        else if (miles < 4000) return "bronze;silver;"+(4000-miles);
+        else if (miles < 8000) return "silver;golden;"+(8000-miles);
+        else if (miles < 15000) return "golden;platinum;"+(15000-miles);
+        else return "platinum;;";
     }
 
 }

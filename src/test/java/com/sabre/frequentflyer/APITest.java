@@ -21,10 +21,11 @@ public class APITest {
         Assert.assertNotNull(APIController.getAccessToken());
     }
 
-    @Test(expected = JSONException.class)
+    @Test
     public void getWrongDistanceTest() {
         int distance = APIController.getDistance("NO", "NO");
-        Assert.assertEquals(java.util.Optional.of(0.0), distance);
+        int expected = 0;
+        Assert.assertEquals(expected, distance);
     }
 
     @Test
@@ -73,6 +74,4 @@ public class APITest {
         int pointsAfterUpdate = ManagementApiController.getUserMiles("auth0|5a6ade3a5c0a5c2c7f4ca068");
         Assert.assertEquals(points + 10, pointsAfterUpdate);
     }
-
-
 }
