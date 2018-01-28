@@ -1,7 +1,12 @@
 package com.sabre.frequentflyer.db;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import java.util.Date;
 
+@Data
+@AllArgsConstructor
 public class Ticket {
     private String fromId;
     private String toId;
@@ -12,7 +17,6 @@ public class Ticket {
     private Date date;
     private int distance;
 
-
     public Ticket(String fromId, String toId, String carrierID, int flightId, String fClass, String fType, Date date) {
         this.fromId = fromId;
         this.toId = toId;
@@ -21,39 +25,7 @@ public class Ticket {
         this.fClass = fClass;
         this.fType = fType;
         this.date = date;
-        distance = 0;
-    }
-
-    public String getFromId() {
-        return fromId;
-    }
-
-    public String getToId() {
-        return toId;
-    }
-
-    public String getCarrierID() {
-        return carrierID;
-    }
-
-    public int getFlightId() {
-        return flightId;
-    }
-
-    public String getfClass() {
-        return fClass;
-    }
-
-    public String getfType() {
-        return fType;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDistance(int distance) {
-        this.distance = distance;
+        this.distance = 0;
     }
 
     @Override

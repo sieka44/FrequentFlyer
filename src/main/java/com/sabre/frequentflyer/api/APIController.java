@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import lombok.Getter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,24 +18,23 @@ public class APIController {
     private static final String ACCESS_TOKEN_URL = "https://api-crt.cert.havail.sabre.com/v2/auth/token";
     private static final String GET_COORDINATES_URL
             = "https://api-crt.cert.havail.sabre.com/v1/lists/utilities/geocode/locations/";
-    public final static String DOMAIN = "V1:56tl4jc7qge5xhb7:DEVCENTER:EXT";
-    public final static String CLIENT_SECRET = "GPmcw02H";
-
-    private static AccessToken accessToken;
-
-    private APIController() {
-        //not for instantiation
-    }
+    private static final String DOMAIN = "V1:56tl4jc7qge5xhb7:DEVCENTER:EXT";
+    private static final String CLIENT_SECRET = "GPmcw02H";
 
     /**
+     * -- GETTER --
      * Returns <code>String</code> object that can be used to connect with
      * GeoCode API.
      *
      * @return returns String object with the access token
      */
-    public static final AccessToken getAccessToken() {
-        return accessToken;
-    }
+    @Getter
+    private static AccessToken accessToken;
+
+    /**
+     * This is a utility class, not designed for instantiation.
+     */
+    private APIController() { }
 
     /**
      * Returns <code>String</code> object with encoded client secret and
@@ -98,7 +98,7 @@ public class APIController {
         HttpResponse<String> response = null;
         try {
             response = Unirest.post(GET_COORDINATES_URL)
-                    .header("authorization", "Bearer " + accessToken.getAccess_token())
+                    .header("authorization", "Bearer " + accessToken.getAccessToken())
                     .header("content-type", "application/json")
                     .header("cache-control", "no-cache")
                     .body("[" + new GeoCodeRQ(airport1).toString() + ",\n" + new GeoCodeRQ(airport2).toString() + "]")
