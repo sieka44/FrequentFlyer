@@ -5,6 +5,8 @@ import lombok.Data;
 @Data
 final class AccessToken {
     /**
+     * Access token used to connect with API.
+     * <p>
      * -- GETTER --
      * Returns <code>String</code> object that can be used to connect with
      * GeoCode API.
@@ -13,6 +15,8 @@ final class AccessToken {
      */
     private String access_token;
     /**
+     * Type of token.
+     * <p>
      * -- GETTER --
      * Returns <code>String</code> of token type
      * -- SETTER --
