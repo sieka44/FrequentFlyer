@@ -10,34 +10,31 @@ import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 
 public class DbTest {
     DbController database;
 
     @Before
     public void init() {
-        database = new DbController();
-        database.loadDbData("Test.csv");
+        database = new DbController("Test.csv");
     }
 
     @Test
     public void toStringTest() {
-        List list = database.getTickets("ethan.white@travel-sabre.com");
+        List list = Arrays.asList(database.getTickets("ethan.white@travel-sabre.com"));
         System.out.println(list);
     }
 
     @Test
     public void addTicket() throws ParseException {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = dateFormat.parse("2016-09-14");
+        Date date = new SimpleDateFormat("yyyy-mm-dd", Locale.US).parse("2016-09-14");
         Ticket ticket = new Ticket("SAN", "LAX", "AA", 11112, "Business", "oneWay", date);
         database.addTicket("ethan.white@travel-sabre.com", ticket);
-        List list = database.getTickets("ethan.white@travel-sabre.com");
+        List list = Arrays.asList(database.getTickets("ethan.white@travel-sabre.com"));
         System.out.println(list);
     }
 

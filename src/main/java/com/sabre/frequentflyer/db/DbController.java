@@ -8,16 +8,14 @@ import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class DbController {
     MultiValueMap tickets;
 
-    public DbController() {
+    public DbController(String filename) {
         tickets = new MultiValueMap();
-        loadDbData("\\src\\main\\resources\\Test.csv");
+        loadDbData(filename);
     }
 
     public void addTicket(String userMail, Ticket ticket) {
@@ -55,7 +53,7 @@ public class DbController {
         }
     }
 
-    public List getTickets(String email) {
-        return new LinkedList(tickets.getCollection(email));
+    public Collection getTickets(String email) {
+        return tickets.getCollection(email);
     }
 }

@@ -103,7 +103,8 @@ public class ManagementApiController {
                     .body(request)
                     .asString();
             Unirest.setTimeouts(0, 0);
-            return response.getBody();
+            byte[] b = response.getBody().getBytes();
+            return new String(b, "UTF-8");
         } catch (UnirestException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
