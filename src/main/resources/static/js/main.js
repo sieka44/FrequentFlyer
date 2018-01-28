@@ -26,6 +26,7 @@ function loadStep() {
     }
 
     if (loaded >= toLoad) {
+        lock.hide();
         $("#app").attr('loaded', 'true');
         $(".determinate").show("slide", { direction: "left" }, 100);
         $(".tabs > .tab:first-child > a").click();
