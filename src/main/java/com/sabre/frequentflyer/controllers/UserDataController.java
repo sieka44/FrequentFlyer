@@ -21,28 +21,56 @@ import java.util.Locale;
 public class UserDataController {
     DbController database = new DbController("Test.csv");
 
-    @RequestMapping(value = "/api/v1/getUserStatus", method = RequestMethod.GET, produces = "text/html")
+    /**
+     * Checks user status based on miles he traveled
+     * @param userId  id of authored user logged in by Auth0
+     * @return <code>ResponsEntity</code> with <code>String</code> of the current status
+     */
+    @RequestMapping(value = "/api/v1/getUserStatus", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<String> getUserStatus() {
-        return ResponseEntity.ok().body("Hello from controller!");
+    public ResponseEntity<String> getUserStatus(@RequestParam String userId) {
+        int miles = ManagementApiController.getUserMiles(userId);
+        return ResponseEntity.ok().body(ManagementApiController.checkStatus(miles));
     }
 
+    /**
+     * Connects with Auth0 API and updates user <code>name</code> and <code>address</code> store in user metadata
+     *
+     * @param userId  id of authored user logged in by Auth0
+     * @param name    new name to update
+     * @param address new address to update
+     * @return response from Auth0 API
+     */
     @RequestMapping(value = "/api/v1/updateProfile", method = RequestMethod.POST)
     @ResponseBody
     public String updateProfile(@RequestParam String userId,
                                 @RequestParam String name,
                                 @RequestParam String address) {
-        System.out.println(address);
         return ManagementApiController.updateUser(userId, name, address);
     }
 
+    /**
+     * Adds ticket to database introduced by user
+     *
+     * @param userId        id of authored user logged in by Auth0
+     * @param email         user email
+     * @param fromId        id of airport he departure
+     * @param toId          id of airport he arrive
+     * @param carrierId     id of carrier
+     * @param flightId      unique flight id
+     * @param fClass        flight class {Economy,Premium Economy, Business, First}
+     * @param fType         flight type {roundTrip,oneWay}
+     * @param departureDate date of departure
+     * @param returnDate    if flight type is <code>roundTrip</code>, it is date of return flight
+     * @return <code>String</code> with updated user metadata
+     */
     @RequestMapping(value = "/api/v1/addTicket", method = RequestMethod.POST)
     @ResponseBody
     public String addTicket(@RequestParam String userId,
                             @RequestParam String email,
                             @RequestParam String fromId,
                             @RequestParam String toId,
-                            @RequestParam String carrierID,//id przewoźnika
+                            @RequestParam String carrierId,//id przewoźnika
                             @RequestParam int flightId,
                             @RequestParam String fClass,//klasa przelotu {Economy,Premium Economy, Business, First}
                             @RequestParam String fType,//rodzaj biletu {roundTrip,oneWay}
@@ -50,13 +78,13 @@ public class UserDataController {
                             @RequestParam String returnDate) throws ParseException {//data, jak jest roundTrip to datax2 wylotu i powrot
         DateFormat df = new SimpleDateFormat("d MMMM, yyyy", Locale.US);
         Date dDate = df.parse(departureDate);
-        Ticket ticket = new Ticket(fromId, toId, carrierID, flightId, fClass, fType, dDate);
+        Ticket ticket = new Ticket(fromId, toId, carrierId, flightId, fClass, fType, dDate);
         int distance = APIController.getDistance(fromId, toId);
         ticket.setDistance(distance);
         database.addTicket(email, ticket);
         if (fType.equals("roundTrip")) {
             Date rDate = df.parse(returnDate);
-            Ticket returnTicket = new Ticket(fromId, toId, carrierID, flightId, fClass, fType, rDate);
+            Ticket returnTicket = new Ticket(fromId, toId, carrierId, flightId, fClass, fType, rDate);
             returnTicket.setDistance(distance);
             database.addTicket(email, returnTicket);
             distance += distance;
@@ -64,10 +92,14 @@ public class UserDataController {
         return ManagementApiController.updatePoints(userId, distance);
     }
 
+    /**
+     * Gets all the tickets for specified user
+     * @param email email of logged in user
+     * @return <code>Collection</code> of the <code>Ticket</code>s
+     */
     @RequestMapping(value = "/api/v1/getTickets", method = RequestMethod.GET)
     @ResponseBody
     public Collection getTickets(@RequestParam String email) {
         return database.getTickets(email);
     }
-
 }

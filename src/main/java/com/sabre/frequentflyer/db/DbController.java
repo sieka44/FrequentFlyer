@@ -8,16 +8,26 @@ import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.Collection;
 
 public class DbController {
     MultiValueMap tickets;
 
+    /**
+     * Constructor which creates new <code>MultiValueMap</code> and load tickets from file
+     * @param filename csv file with mock tickets data
+     */
     public DbController(String filename) {
         tickets = new MultiValueMap();
         loadDbData(filename);
     }
 
+    /**
+     * Adds ticket to map with key user email and value as <code>new Ticket</code>
+     * @param userMail email of logged in user
+     * @param ticket ticket which we want to add to database
+     */
     public void addTicket(String userMail, Ticket ticket) {
         tickets.put(userMail, ticket);
     }
@@ -42,7 +52,8 @@ public class DbController {
                     int distance = Integer.parseInt(data[11].trim());
                     ticket.setDistance(distance);
                     ticket = new Ticket(data[3].trim(), data[4].trim(),
-                            data[5].trim(), Integer.parseInt(data[6].trim()), data[7].trim(), data[8].trim(), dateFormat.parse(data[10].trim()));
+                            data[5].trim(), Integer.parseInt(data[6].trim()), data[7].trim(),
+                            data[8].trim(), dateFormat.parse(data[10].trim()));
                     distance = Integer.parseInt(data[11].trim());
                     ticket.setDistance(distance);
                     tickets.put(data[2].trim(), ticket);
