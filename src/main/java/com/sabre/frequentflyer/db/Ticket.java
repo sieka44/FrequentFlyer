@@ -10,7 +10,7 @@ public class Ticket {
     private String fClass;
     private String fType;
     private Date date;
-    private Double distance;
+    private int distance;
 
 
     public Ticket(String fromId, String toId, String carrierID, int flightId, String fClass, String fType, Date date) {
@@ -21,7 +21,7 @@ public class Ticket {
         this.fClass = fClass;
         this.fType = fType;
         this.date = date;
-        distance = 0.0;
+        distance = 0;
     }
 
     public String getFromId() {
@@ -52,16 +52,17 @@ public class Ticket {
         return date;
     }
 
-    public void setDistance(Double distance) {
+    public void setDistance(int distance) {
         this.distance = distance;
     }
 
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "fromId='" + fromId + '\'' +
+                ", toId='" + toId + '\'' +
+                ", date=" + date +
+                ", distance=" + distance +
+                '}';
+    }
 }
-
-/*
-Noah; Williams; noah.williams@travel-sabre.com; LHR; EDI; BA; 1454; Business; oneWay; 2017-08-06;
-Noah; Williams; noah.williams@travel-sabre.com; EDI; LHR; BA; 4541; Business; oneWay; 2017-08-09;
-
-Ethan; White; ethan.white@travel-sabre.com; ORD; SAN; AS; 6972; Economy; oneWay; 2008-01-02;
-Ethan; White; ethan.white@travel-sabre.com; SAN; ORD; AS; 2796; Economy; oneWay; 2008-01-05;
-*/

@@ -1,6 +1,7 @@
 package com.sabre.frequentflyer;
 
 import com.sabre.frequentflyer.api.APIController;
+import com.sabre.frequentflyer.controllers.ManagementApiController;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,7 +28,7 @@ public class APITest {
     }
 
     @Test
-    public void parsingJSONTest() {
+    public void parsingJSONTest() throws JSONException {
         final String jsonString = "{\"Results\":[{\"GeoCodeRS\":{\"Place\":[{\"Category\":\"AIR\",\"latitude\":50.078056,\"Country\":\"PL\",\"confidenceFactor\":\"ADDRESS_QUALITY\",\"Id\":\"KRK\",\"City\":\"Krakow\",\"longitude\":19.786111,\"Name\":\"Krakow\"}],\"status\":\"ONE_PLACE_FOUND\"}},{\"GeoCodeRS\":{\"Place\":[{\"Category\":\"AIR\",\"State\":\"GA\",\"latitude\":33.640278,\"Country\":\"US\",\"confidenceFactor\":\"ADDRESS_QUALITY\",\"Id\":\"ATL\",\"City\":\"Atlanta\",\"longitude\":-84.426944,\"Name\":\"Atlanta\"}],\"status\":\"ONE_PLACE_FOUND\"}}],\"Links\":[{\"rel\":\"self\",\"href\":\"https://api-crt.cert.havail.sabre.com/v1/lists/utilities/geocode/locations/\"},{\"rel\":\"linkTemplate\",\"href\":\"https://api-crt.cert.havail.sabre.com/v1/lists/utilities/geocode/locations\"}]}";
         final String fragment1 = "[{\"Category\":\"AIR\",\"latitude\":50.078056,\"Country\":\"PL\",\"confidenceFactor\":\"ADDRESS_QUALITY\",\"Id\":\"KRK\",\"City\":\"Krakow\",\"longitude\":19.786111,\"Name\":\"Krakow\"}]";
         final String fragment2 = "[{\"Category\":\"AIR\",\"State\":\"GA\",\"latitude\":33.640278,\"Country\":\"US\",\"confidenceFactor\":\"ADDRESS_QUALITY\",\"Id\":\"ATL\",\"City\":\"Atlanta\",\"longitude\":-84.426944,\"Name\":\"Atlanta\"}]";
@@ -64,5 +65,14 @@ public class APITest {
         System.out.println("Distance:" + distance);
         Assert.assertTrue("Error", (8108 - 2) < distance && distance < (8108 + 2));
     }
+
+    @Test
+    public void updateUserMailsTest() {
+        int points = ManagementApiController.getUserMiles("auth0|5a6ade3a5c0a5c2c7f4ca068");
+        ManagementApiController.updatePoints("auth0|5a6ade3a5c0a5c2c7f4ca068", 10);
+        int pointsAfterUpdate = ManagementApiController.getUserMiles("auth0|5a6ade3a5c0a5c2c7f4ca068");
+        Assert.assertEquals(points + 10, pointsAfterUpdate);
+    }
+
 
 }

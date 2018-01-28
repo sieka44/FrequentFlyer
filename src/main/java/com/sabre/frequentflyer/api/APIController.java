@@ -5,6 +5,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -84,6 +85,8 @@ public class APIController {
             }
             return getMiles(coordinates);
         } catch (UnirestException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
             e.printStackTrace();
             accessToken = null;
         }

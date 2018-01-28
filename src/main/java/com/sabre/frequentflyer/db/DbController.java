@@ -17,13 +17,14 @@ public class DbController {
 
     public DbController() {
         tickets = new MultiValueMap();
+        loadDbData("\\src\\main\\resources\\Test.csv");
     }
 
     public void addTicket(String userMail, Ticket ticket) {
         tickets.put(userMail, ticket);
     }
 
-    public void loadDbData(String fileName) {
+    private void loadDbData(String fileName) {
         BufferedReader br = null;
         String line;
         try {
@@ -39,16 +40,14 @@ public class DbController {
                         data[7].trim(), data[8].trim(), date);
                 tickets.put(email, ticket);
                 if (!data[8].trim().equals("oneWay")) {
-                    double distance = Double.parseDouble(data[11].trim());
+                    int distance = Integer.parseInt(data[11].trim());
                     ticket.setDistance(distance);
-                    //TODO: Update miles
                     ticket = new Ticket(data[3].trim(), data[4].trim(),
                             data[5].trim(), Integer.parseInt(data[6].trim()), data[7].trim(), data[8].trim(), dateFormat.parse(data[10].trim()));
-                    distance = Double.parseDouble(data[11].trim());
+                    distance = Integer.parseInt(data[11].trim());
                     ticket.setDistance(distance);
-                    //TODO: Update miles
                     tickets.put(data[2].trim(), ticket);
-                } else ticket.setDistance(Double.parseDouble(data[10].trim()));
+                } else ticket.setDistance(Integer.parseInt(data[10].trim()));
             }
         } catch (IOException | ParseException e) {
             e.printStackTrace();
