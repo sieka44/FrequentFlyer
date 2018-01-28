@@ -15,11 +15,19 @@ import java.util.List;
 public class DbController {
     MultiValueMap tickets;
 
+    /**
+     * Constructor which creates new <code>MultiValueMap</code> and load tickets from file
+     */
     public DbController() {
         tickets = new MultiValueMap();
         loadDbData("\\src\\main\\resources\\Test.csv");
     }
 
+    /**
+     * Adds ticket to map with key user email and value as <code>new Ticket</code>
+     * @param userMail email of logged in user
+     * @param ticket ticket which we want to add to database
+     */
     public void addTicket(String userMail, Ticket ticket) {
         tickets.put(userMail, ticket);
     }
