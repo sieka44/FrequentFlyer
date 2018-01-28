@@ -58,6 +58,7 @@ public class DbController {
                     ticket.setDistance(distance);
                     tickets.put(data[2].trim(), ticket);
                 } else ticket.setDistance(Integer.parseInt(data[10].trim()));
+                System.out.println(ticket);
             }
         } catch (IOException | ParseException e) {
             e.printStackTrace();

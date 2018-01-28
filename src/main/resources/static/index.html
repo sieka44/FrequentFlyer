@@ -52,7 +52,7 @@
                     <img src="img/ffstatus/bronze.png"/>
                 </div>
                 <div id="prog-desc" class="col">
-                    <h4>You travelled 1337 miles with&nbsp;us!</h4>
+                    <h4>You travelled {{user.miles}} miles with&nbsp;us!</h4>
                     <h6>Travel 663 more to get to silver frequent flyer status.</h6>
 
                     <div class="progress">
@@ -66,19 +66,19 @@
                     <h4 class="light">Your last travels:</h4>
 
                     <div class="row">
-                        <div class="col s12 m6">
+                        <div class="col s12 m6" v-for="ticket in tickets">
                             <div class="card small hoverable">
                                 <div class="card-image">
-                                    <img src="img/city/KRA.jpg">
-                                    <img src="img/city/NYC.jpg">
+                                    <img :src="'img/city/'+ticket.fromId+'.jpg'">
+                                    <img :src="'img/city/'+ticket.toId+'.jpg'">
                                     <span class="card-title">
-                                        <span>Kraków</span>
-                                        <span style="position: absolute; left: 55%;">New York City</span>
+                                        <span>{{ getCityName(ticket.fromId) }}</span>
+                                        <span style="position: absolute; left: 55%;">{{ getCityName(ticket.toId) }}</span>
                                     </span>
                                 </div>
                                 <div class="card-content">
-                                    <p>Departure: 22 January 2018</p>
-                                    <p> Pierdu pierdu jakieś dodatkowe dane </p>
+                                    <p>Departure: {{ moment(ticket.date).format("LL") }}</p>
+                                    <p>Seat class: {{ ticket.fclass }}</p>
                                 </div>
                             </div>
                         </div>
@@ -119,51 +119,57 @@
             <div id = "ticket" class = "col s12">
                 <div class="row">
                     <form class="col s12">
+                        <input type="hidden" name="userId" v-model="user.userId"/>
+                        <input type="hidden" name="email" v-model="user.email"/>
+                        <input type="hidden" id="fromId" name="fromId"/>
+                        <input type="hidden" id="toId" name="toId"/>
+                        <input type="hidden" name="carrierID" value="XD"/>
+                        <input type="hidden" name="flightId" value="0"/>
                         <div class="row">
                             <div class="input-field col s12 m6">
-                                <i class="material-icons prefix">location_city</i>
-                                <input type="text" id="from" class="autocomplete">
+                                <i class="material-icons prefix">flight_takeoff</i>
+                                <input type="text" id="from" name="from" class="validate autocomplete city">
                                 <label for="from">From</label>
                             </div>
                             <div class="input-field col s12 m6">
-                                <i class="material-icons prefix">location_city</i>
-                                <input type="text" id="to" class="autocomplete"/>
+                                <i class="material-icons prefix">flight_land</i>
+                                <input type="text" id="to" name="to" class="validate autocomplete city"/>
                                 <label for="to">To</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12 m12">
                                 <i class="material-icons prefix">date_range</i>
-                                <input id="datefrom" type="text" class="datepicker"/>
-                                <label for="datefrom" >Departure</label>
+                                <input id="departureDate" name="departureDate" type="text" class="datepicker"/>
+                                <label for="departureDate" >Departure</label>
                             </div>
                             <div class="input-field col s12 m6 hide">
                                 <i class="material-icons prefix">date_range</i>
-                                <input id="dateto" type="text" class="datepicker"/>
-                                <label for="dateto" >Return</label>
+                                <input id="returnDate" name="returnDate" type="text" class="datepicker"/>
+                                <label for="returnDate" >Return</label>
                             </div>
                         </div>
                         <div class="row checkboxes">
                             <div class="col s12 m6">
                                 <div class="input-field">
                                     <i class="material-icons prefix">event_seat</i>
-                                    <input disabled id="sc"/>
-                                    <label for="sc">Seat class:</label>
+                                    <input id="fClassHolder" name="fClassHolder"/>
+                                    <label for="fClassHolder">Seat class:</label>
                                 </div>
                                 <p>
-                                    <input class="with-gap" name="seat_class" value="economy" type="radio" id="e"  />
+                                    <input class="with-gap" name="fClass" value="Economy" type="radio" id="e"  />
                                     <label for="e">Economy Class</label>
                                 </p>
                                 <p>
-                                    <input class="with-gap" name="seat_class" value="premium-economy" type="radio" id="pe"  />
+                                    <input class="with-gap" name="fClass" value="Premium Economy" type="radio" id="pe"  />
                                     <label for="pe">Premium Economy Class</label>
                                 </p>
                                 <p>
-                                    <input class="with-gap" name="seat_class" value="business" type="radio" id="b"  />
+                                    <input class="with-gap" name="fClass" value="Business" type="radio" id="b"  />
                                     <label for="b">Business Class</label>
                                 </p>
                                 <p>
-                                    <input class="with-gap" name="seat_class" value="first" type="radio" id="f"  />
+                                    <input class="with-gap" name="fClass" value="First" type="radio" id="f"  />
                                     <label for="f">First Class</label>
                                 </p>
                             </div>
@@ -174,11 +180,11 @@
                                     <label for="tt">Ticket type:</label>
                                 </div>
                                 <p>
-                                    <input class="with-gap" name="ticket_type" value="oneway" type="radio" id="ow" checked />
+                                    <input class="with-gap" name="fType" value="oneWay" type="radio" id="ow" checked />
                                     <label for="ow">One-way</label>
                                 </p>
                                 <p>
-                                    <input class="with-gap" name="ticket_type" value="roundtrip" type="radio" id="rt"  />
+                                    <input class="with-gap" name="fType" value="roundTrip" type="radio" id="rt"  />
                                     <label for="rt">Round trip</label>
                                 </p>
                                 <button class="btn waves-effect waves-light right" type="submit">Add
@@ -207,12 +213,13 @@
     </div></div>
 </div>
 <script type="text/javascript" src="js/lib/lock.min.js"></script>
+<script type="text/javascript" src="js/lib/moment.min.js"></script>
 <script type="text/javascript" src="js/lib/vue.min.js"></script>
 <script type="text/javascript" src="js/lib/vue-resource.min.js"></script>
 <script type="text/javascript" src="js/lib/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="js/lib/jquery.validate.min.js"></script>
 <script type="text/javascript" src="js/lib/jquery-ui.min.js"></script>
 <script type="text/javascript" src="js/lib/materialize.min.js"></script>
+<script type="text/javascript" src="js/lib/jquery.validate.min.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>
