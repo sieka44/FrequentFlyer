@@ -22,6 +22,7 @@ public class DbTest {
     @Before
     public void init() {
         database = new DbController();
+        database.loadDbData("Test.csv");
     }
 
     @Test
