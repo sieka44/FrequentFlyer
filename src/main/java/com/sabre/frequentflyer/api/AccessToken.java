@@ -5,10 +5,22 @@ public final class AccessToken {
     private String token_type;
     private long expires_in;
 
+
+    /**
+     * Returns <code>String</code> object that can be used to connect with
+     * GeoCode API.
+     *
+     * @return returns String object with the access token
+     */
     public String getAccess_token() {
         return access_token;
     }
 
+    /**
+     * Sets the access token.
+     *
+     * @param access_token the String of the access token
+     */
     public void setAccess_token(String access_token) {
         this.access_token = access_token;
     }

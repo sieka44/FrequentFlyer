@@ -12,6 +12,11 @@ import java.net.URLEncoder;
 public class ManagementApiController {
     private static String accessToken = null;
 
+    /**
+     * Refreshes access token to management Auth0 API which could expire during the time of program working.
+     *
+     * @see <a href="https://auth0.com/docs/api/management/v2/tokens">How to get token</a>
+     */
     private static void refreshToken() {
         try {
             HttpResponse<String> response = Unirest.post("https://frequent-flyer.eu.auth0.com/oauth/token")
@@ -26,12 +31,19 @@ public class ManagementApiController {
         }
     }
 
+    /**
+     * Updates Auth0 user metadata with <code>name</code> and <code>address</code> fields.
+     *
+     * @param userID  id of authored user logged in by Auth0
+     * @param name    user name which will be saved in user metadata
+     * @param address user address which will be saved in user metadata
+     * @return
+     */
+
     public static String updateUser(String userID, String name, String address) {
         if (accessToken == null) refreshToken();
         HttpResponse<String> response;
         try {
-
-
             String request = "{ \"user_metadata\": " +
                     "{ \"address\": \"" + address + "\"," +
                     " \"name\": \"" + name + "\" }" +
@@ -51,6 +63,14 @@ public class ManagementApiController {
         return "";
     }
 
+    /**
+     * Connects with Auth0 Api to get user metadata
+     * @param userID id of authored user logged in by Auth0
+     * @return 0 if exception has been thrown, otherwise miles of given user
+     * @throws UnirestException if <code>Unirest</code> cant connect with given endpoint
+     * @throws UnsupportedEncodingException if <code>URLEncoder</code> cannot handle encoding <code>userID</code>
+     * @throws JSONException if response is different than expected
+     */
     public static int getUserMiles(String userID) {
         if (accessToken == null) refreshToken();
         HttpResponse<String> response;

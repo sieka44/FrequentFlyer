@@ -49,7 +49,7 @@ public class UserDataController {
         ticket.setDistance(distance);
         database.addTicket(email, ticket);
         if (fType.equals("roundTrip")) {
-            Ticket returnTicket = new Ticket(fromId, toId, carrierID, flightId, fClass, fType, departureDate);
+            Ticket returnTicket = new Ticket(fromId, toId, carrierID, flightId, fClass, fType, returnDate);
             returnTicket.setDistance(distance);
             database.addTicket(email, returnTicket);
             distance += distance;
