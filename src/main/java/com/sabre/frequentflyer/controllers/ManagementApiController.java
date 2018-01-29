@@ -3,6 +3,9 @@ package com.sabre.frequentflyer.controllers;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.ToString;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -122,22 +125,19 @@ public class ManagementApiController {
      * @return current status as <code>String</code> with format (status;nextStatus;pointsToNext)
      */
     public static Response checkStatus(int miles) {
-        if (miles < 1000) return new Response("notFF","bronze",1000-miles);
-        else if (miles < 4000) return new Response("bronze","silver",(4000-miles));
-        else if (miles < 8000) return new Response("silver","golden",(8000-miles));
-        else if (miles < 15000) return new Response("golden","platinum",(15000-miles));
-        else return new Response("platinum","",0);
+        if (miles < 1000) return new Response("notFF","bronze",1000-miles, miles/10);
+        else if (miles < 4000) return new Response("bronze","silver",(4000-miles), miles/40);
+        else if (miles < 8000) return new Response("silver","golden",(8000-miles), miles/80);
+        else if (miles < 15000) return new Response("golden","platinum",(15000-miles), miles/150);
+        else return new Response("platinum","",0, 100);
     }
 
+    @Data
+    @AllArgsConstructor
     static class Response {
         String status;
         String nextStatus;
         int howManyLeft;
-
-        public Response(String status, String nextStatus, int howManyLeft) {
-            this.status = status;
-            this.nextStatus = nextStatus;
-            this.howManyLeft = howManyLeft;
-        }
+        double progress;
     }
 }

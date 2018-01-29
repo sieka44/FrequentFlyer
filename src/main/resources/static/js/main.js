@@ -6,7 +6,7 @@ function loadStep() {
     if (loaded === 1) {
         application.$http.get('/api/v1/getUserStatus?userId='+application.user.userId).then(
             response => {
-                console.log(response.body);
+                application.statusData = response.body;
                 loadStep();
             },
             response => {
@@ -39,7 +39,8 @@ application = new Vue({
         user: {
             name:'', picture:''
         },
-        tickets: ''
+        tickets: '',
+        statusData: {}
     }
 });
 

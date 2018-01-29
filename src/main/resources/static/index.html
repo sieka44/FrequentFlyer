@@ -49,14 +49,16 @@
 
             <div id="home" class = "col s12">
                 <div id="status" class="col">
-                    <img src="img/ffstatus/bronze.png"/>
+                    <img v-if="statusData.status" :src="'img/ffstatus/'+statusData.status+'.png'"/>
                 </div>
                 <div id="prog-desc" class="col">
-                    <h4>You travelled {{user.miles}} miles with&nbsp;us!</h4>
-                    <h6>Travel 663 more to get to silver frequent flyer status.</h6>
+                    <h4 v-if="user.miles==0">Let the adventure begin!</h4>
+                    <h4 v-else>You travelled {{user.miles}} miles with&nbsp;us!</h4>
+                    <h6 v-if="statusData.howManyLeft">Get {{statusData.howManyLeft}} points and become {{statusData.nextStatus}} frequent flyer!</h6>
+                    <h6 v-else>You have already reached the top! There is no greater status!</h6>
 
                     <div class="progress">
-                        <div class="determinate" style="width: 70%; display: none;"></div>
+                        <div class="determinate" :style="'width: '+statusData.progress+'%; display: none;'"></div>
                     </div>
                 </div>
 
