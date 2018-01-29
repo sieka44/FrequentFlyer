@@ -11,14 +11,12 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.pagefactory.ByChained;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = FrequentFlyerApplication.class)
 @WebAppConfiguration
 public class FrequentFlyerApplicationTests {
     public static final String PROFILE_UPDATE_SUCCESS_STRING = "Successfully updated your profile!";
@@ -33,13 +31,15 @@ public class FrequentFlyerApplicationTests {
     public void before() {
         System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
         driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, 15);
+        wait = new WebDriverWait(driver, 20);
     }
 
     private void doLogin() {
-        wait.until(ExpectedConditions.elementToBeClickable(By.className("auth0-lock-submit")));
-        driver.findElement(By.name("email")).sendKeys(TEST_USER);
-        driver.findElement(By.name("password")).sendKeys(TEST_PASSWORD);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("auth0-lock-form")));
+        WebElement auth0Form = driver.findElement(By.className("auth0-lock-form"));
+        wait.until(ExpectedConditions.visibilityOfNestedElementsLocatedBy(auth0Form, By.name("email")));
+        auth0Form.findElement(By.name("email")).sendKeys(TEST_USER);
+        auth0Form.findElement(By.name("password")).sendKeys(TEST_PASSWORD);
         driver.findElement(By.className("auth0-lock-submit")).click();
         wait.until(ExpectedConditions.elementToBeClickable(TABS_LOGOUT));
     }
@@ -63,7 +63,7 @@ public class FrequentFlyerApplicationTests {
         nameInput.sendKeys("incorrect_input");
 
         nameInput.submit();
-        assertEquals("error", nameInput.getAttribute("class"));
+        assertEquals("validate invalid", nameInput.getAttribute("class"));
 
         nameInput.clear();
         nameInput.sendKeys(TEST_NAME);
