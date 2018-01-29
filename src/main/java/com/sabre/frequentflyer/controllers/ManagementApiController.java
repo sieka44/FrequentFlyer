@@ -34,12 +34,12 @@ public class ManagementApiController {
     /**
      * Updates Auth0 user metadata with <code>name</code> and <code>address</code> fields.
      *
-     * @param userID  id of authored user logged in by Auth0
+     * @param userId  id of authored user logged in by Auth0
      * @param name    user name which will be saved in user metadata
      * @param address user address which will be saved in user metadata
      * @return <code>String</code> with response body.
      */
-    public static String updateUser(String userID, String name, String address) {
+    public static String updateUser(String userId, String name, String address) {
         if (accessToken == null) refreshToken();
         HttpResponse<String> response;
         try {
@@ -48,7 +48,7 @@ public class ManagementApiController {
                     " \"name\": \"" + name + "\" }" +
                     " }";
             response = Unirest.patch("https://frequent-flyer.eu.auth0.com/api/v2/users/"
-                    + URLEncoder.encode(userID, "UTF-8"))
+                    + URLEncoder.encode(userId, "UTF-8"))
                     .header("authorization", "Bearer " + accessToken)
                     .header("content-type", "application/json")
                     .body(request)
@@ -65,15 +65,15 @@ public class ManagementApiController {
     /**
      * Connects with Auth0 Api to get user miles
      *
-     * @param userID id of authored user logged in by Auth0
+     * @param userId id of authored user logged in by Auth0
      * @return 0 if exception has been thrown, otherwise miles of given user
      */
-    public static int getUserMiles(String userID) {
+    public static int getUserMiles(String userId) {
         if (accessToken == null) refreshToken();
         HttpResponse<String> response;
         try {
             response = Unirest.get("https://frequent-flyer.eu.auth0.com/api/v2/users/"
-                    + URLEncoder.encode(userID, "UTF-8") + "?fields=user_metadata")
+                    + URLEncoder.encode(userId, "UTF-8") + "?fields=user_metadata")
                     .header("authorization", "Bearer " + accessToken)
                     .asString();
             Unirest.setTimeouts(0, 0);
@@ -90,18 +90,18 @@ public class ManagementApiController {
     /**
      * Connects with Auth0 APi to update user miles
      *
-     * @param userID id of authored user logged in by Auth0
+     * @param userId id of authored user logged in by Auth0
      * @param miles  amount of miles, which we want to add to the user pot
      * @return Body of response from the API as <code>String</code>, empty if update failure
      */
-    public static String updatePoints(String userID, int miles) {
+    public static String updatePoints(String userId, int miles) {
         if (accessToken == null) refreshToken();
         HttpResponse<String> response;
         try {
-            miles += getUserMiles(userID);
+            miles += getUserMiles(userId);
             String request = "{ \"user_metadata\" : { \"miles\": " + miles + " } }";
             response = Unirest.patch("https://frequent-flyer.eu.auth0.com/api/v2/users/"
-                    + URLEncoder.encode(userID, "UTF-8"))
+                    + URLEncoder.encode(userId, "UTF-8"))
                     .header("authorization", "Bearer " + accessToken)
                     .header("content-type", "application/json")
                     .body(request)

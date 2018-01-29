@@ -3,6 +3,7 @@ package com.sabre.frequentflyer;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import com.sabre.frequentflyer.controllers.ManagementApiController;
 import com.sabre.frequentflyer.db.DbController;
 import com.sabre.frequentflyer.db.Ticket;
 import org.json.JSONException;
@@ -26,7 +27,7 @@ public class DbTest {
 
     @Test
     public void toStringTest() {
-        List list = Arrays.asList(database.getTickets("ethan.white@travel-sabre.com"));
+        List list = new LinkedList(database.getTickets("ethan.white@travel-sabre.com"));
         System.out.println(list);
     }
 

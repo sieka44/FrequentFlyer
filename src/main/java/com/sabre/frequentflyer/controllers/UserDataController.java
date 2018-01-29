@@ -28,9 +28,9 @@ public class UserDataController {
      */
     @RequestMapping(value = "/api/v1/getUserStatus", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<ManagementApiController.Response> getUserStatus(@RequestParam String userId) {
+    public ResponseEntity<Object> getUserStatus(@RequestParam String userId) {
         int miles = ManagementApiController.getUserMiles(userId);
-        return ResponseEntity.ok().body(ManagementApiController.checkStatus(miles));
+        return ResponseEntity.ok().body(ManagementApiController.checkStatus(miles).getClass());
     }
 
     /**
