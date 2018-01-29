@@ -58,7 +58,7 @@ public class DbController {
                 if (!data[8].trim().equals("oneWay")) {
                     int distance = Integer.parseInt(data[11].trim());
                     ticket.setDistance(distance);
-                    ticket = new Ticket(data[3].trim(), data[4].trim(),
+                    ticket = new Ticket(data[4].trim(), data[3].trim(),
                             data[5].trim(), Integer.parseInt(data[6].trim()), data[7].trim(),
                             data[8].trim(), dateFormat.parse(data[10].trim()));
                     distance = Integer.parseInt(data[11].trim());
