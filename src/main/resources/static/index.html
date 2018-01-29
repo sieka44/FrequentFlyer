@@ -43,20 +43,22 @@
                     <li class = "tab col"><a id="profileTab" href = "#profile">Profile</a></li>
                     <li class = "tab col"><a href = "#offers">Offers</a></li>
                     <li class = "tab col"><a href = "#ticket">+Add ticket</a></li>
-                    <li class = "tab col"><a href class="logoutButton" onclick="window.location = '/logout'">Logout</a></li>
+                    <li class = "tab col"><a href class="logoutButton" onclick="logout()'">Logout</a></li>
                 </ul>
             </div>
 
             <div id="home" class = "col s12">
                 <div id="status" class="col">
-                    <img src="img/ffstatus/bronze.png"/>
+                    <img v-if="statusData.status" :src="'img/ffstatus/'+statusData.status+'.png'"/>
                 </div>
                 <div id="prog-desc" class="col">
-                    <h4>You travelled 1337 miles with&nbsp;us!</h4>
-                    <h6>Travel 663 more to get to silver frequent flyer status.</h6>
+                    <h4 v-if="user.miles==0">Let the adventure begin!</h4>
+                    <h4 v-else>You travelled {{user.miles}} miles with&nbsp;us!</h4>
+                    <h6 v-if="statusData.howManyLeft">Get {{statusData.howManyLeft}} points and become {{statusData.nextStatus}} frequent flyer!</h6>
+                    <h6 v-else>You have already reached the top! There is no greater status!</h6>
 
                     <div class="progress">
-                        <div class="determinate" style="width: 70%; display: none;"></div>
+                        <div class="determinate" :style="'width: '+statusData.progress+'%; display: none;'"></div>
                     </div>
                 </div>
 
@@ -66,33 +68,19 @@
                     <h4 class="light">Your last travels:</h4>
 
                     <div class="row">
-                        <div class="col s12 m6">
-                            <div class="card medium hoverable">
+                        <div class="col s12 m6" v-for="ticket in tickets">
+                            <div class="card small hoverable">
                                 <div class="card-image">
-                                    <img src="img/city/KRA.jpg">
-                                    <span class="card-title">Kraków</span>
+                                    <img :src="'img/city/'+ticket.fromId+'.jpg'">
+                                    <img :src="'img/city/'+ticket.toId+'.jpg'">
+                                    <span class="card-title">
+                                        <span>{{ getCityName(ticket.fromId) }}</span>
+                                        <span style="position: absolute; left: 55%;">{{ getCityName(ticket.toId) }}</span>
+                                    </span>
                                 </div>
                                 <div class="card-content">
-                                    <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-                                </div>
-                                <div class="card-action">
-                                    <a href="#">This is a link</a>
-                                    <a href="#">This is a link</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col s12 m6">
-                            <div class="card medium hoverable">
-                                <div class="card-image">
-                                    <img src="img/city/NYC.jpg">
-                                    <span class="card-title">New York</span>
-                                </div>
-                                <div class="card-content">
-                                    <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-                                </div>
-                                <div class="card-action">
-                                    <a href="#">This is a link</a>
-                                    <a href="#">This is a link</a>
+                                    <p>Departure: {{ moment(ticket.date).format("LL") }}</p>
+                                    <p>Seat class: {{ ticket.fclass }}</p>
                                 </div>
                             </div>
                         </div>
@@ -100,22 +88,27 @@
                 </div>
             </div>
             <div id="profile" class="col s12 active" style="">
-                <div class="col s2">
+                <div class="col s4 l3">
                     <img class="avatar" :src=user.picture style="width: 100%;"/>
                 </div>
-                <form method="post" action="./api/v1/updateProfile" class="col s10">
+                <form id="profileForm" class="col s8 l9">
                     <div class="row">
-                        <input type="hidden" name="token" v-model="token"/>
+                        <input type="hidden" name="userId" v-model="user.userId"/>
                         <div class="input-field col s12">
-                            <input id="name" name="name" class="validate" type="text" :value="user.hasPersonalData?user.name:''"/>
-                            <label for="name" :class="user.hasPersonalData?'active':''" data-error="wrong" data-success="right">Name</label>
+                            <i class="material-icons prefix">account_circle</i>
+                            <input class="validate" id="name" name="name" type="text" :value="user.hasPersonalData?user.name:''"/>
+                            <label for="name" :class="user.hasPersonalData?'active':''">Name</label>
                         </div>
                         <div class="input-field col s12">
-                            <input id="address" name="address" class="validate" type="text" :value="user.address"/>
-                            <label for="address" :class="user.address?'active':''" data-error="wrong" data-success="right">Address</label>
+                            <i class="material-icons prefix">location_city</i>
+                            <input class="validate" id="address" name="address" type="text" :value="user.address"/>
+                            <label for="address" :class="user.address?'active':''">Address</label>
                         </div>
                         <button class="btn waves-effect waves-light right" type="submit">Save
                             <i class="material-icons right">send</i>
+                        </button>
+                        <button class="btn waves-effect waves-light red right" id="resetPass">Reset password
+                            <i class="material-icons right">lock_open</i>
                         </button>
                     </div>
                 </form>
@@ -127,15 +120,78 @@
             </div>
             <div id = "ticket" class = "col s12">
                 <div class="row">
-                    <form class="col s12 m6">
+                    <form class="col s12">
+                        <input type="hidden" name="userId" v-model="user.userId"/>
+                        <input type="hidden" name="email" v-model="user.email"/>
+                        <input type="hidden" id="fromId" name="fromId"/>
+                        <input type="hidden" id="toId" name="toId"/>
+                        <input type="hidden" name="carrierID" value="XD"/>
+                        <input type="hidden" name="flightId" value="0"/>
                         <div class="row">
-                            <div class="input-field col s12">
-                                <input id="from" class="validate"/>
-                                <label for="from" data-error="wrong" data-success="right">From</label>
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">flight_takeoff</i>
+                                <input type="text" id="from" name="from" class="validate autocomplete city">
+                                <label for="from">From</label>
                             </div>
-                            <div class="input-field col s12">
-                                <input id="to" class="validate"/>
-                                <label for="to" data-error="wrong" data-success="right">To</label>
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">flight_land</i>
+                                <input type="text" id="to" name="to" class="validate autocomplete city"/>
+                                <label for="to">To</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12 m12">
+                                <i class="material-icons prefix">date_range</i>
+                                <input id="departureDate" name="departureDate" type="text" class="validate datepicker"/>
+                                <label for="departureDate" >Departure</label>
+                            </div>
+                            <div class="input-field col s12 m6 hide">
+                                <i class="material-icons prefix">date_range</i>
+                                <input id="returnDate" name="returnDate" type="text" class="validate datepicker"/>
+                                <label for="returnDate" >Return</label>
+                            </div>
+                        </div>
+                        <div class="row checkboxes">
+                            <div class="col s12 m6">
+                                <div class="input-field">
+                                    <i class="material-icons prefix">event_seat</i>
+                                    <input id="fClassHolder" name="fClassHolder"/>
+                                    <label for="fClassHolder">Seat class:</label>
+                                </div>
+                                <p>
+                                    <input class="with-gap" name="fClass" value="Economy" type="radio" id="e"  />
+                                    <label for="e">Economy Class</label>
+                                </p>
+                                <p>
+                                    <input class="with-gap" name="fClass" value="Premium Economy" type="radio" id="pe"  />
+                                    <label for="pe">Premium Economy Class</label>
+                                </p>
+                                <p>
+                                    <input class="with-gap" name="fClass" value="Business" type="radio" id="b"  />
+                                    <label for="b">Business Class</label>
+                                </p>
+                                <p>
+                                    <input class="with-gap" name="fClass" value="First" type="radio" id="f"  />
+                                    <label for="f">First Class</label>
+                                </p>
+                            </div>
+                            <div class="col s12 m6">
+                                <div class="input-field">
+                                    <i class="material-icons prefix">event_seat</i>
+                                    <input disabled id="tt"/>
+                                    <label for="tt">Ticket type:</label>
+                                </div>
+                                <p>
+                                    <input class="with-gap" name="fType" value="oneWay" type="radio" id="ow" checked />
+                                    <label for="ow">One-way</label>
+                                </p>
+                                <p>
+                                    <input class="with-gap" name="fType" value="roundTrip" type="radio" id="rt"  />
+                                    <label for="rt">Round trip</label>
+                                </p>
+                                <button class="btn waves-effect waves-light right" type="submit">Add
+                                    <i class="material-icons right">add</i>
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -159,11 +215,13 @@
     </div></div>
 </div>
 <script type="text/javascript" src="js/lib/lock.min.js"></script>
+<script type="text/javascript" src="js/lib/moment.min.js"></script>
 <script type="text/javascript" src="js/lib/vue.min.js"></script>
 <script type="text/javascript" src="js/lib/vue-resource.min.js"></script>
 <script type="text/javascript" src="js/lib/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="js/lib/jquery-ui.min.js"></script>
 <script type="text/javascript" src="js/lib/materialize.min.js"></script>
+<script type="text/javascript" src="js/lib/jquery.validate.min.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>

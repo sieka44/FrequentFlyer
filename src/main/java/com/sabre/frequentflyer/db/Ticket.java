@@ -1,17 +1,77 @@
 package com.sabre.frequentflyer.db;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import java.util.Date;
 
+@Data
+@AllArgsConstructor
 public class Ticket {
+    /**
+     * id of airport user departure
+     * -- GETTER --
+     * Returns <code>String</code> airport
+     * -- SETTER --
+     * Sets the airport identifier.
+     */
     private String fromId;
+    /**
+     * id of airport user arrive
+     * -- GETTER --
+     * Returns <code>String</code> airport
+     * -- SETTER --
+     * Sets the airport identifier.
+     */
     private String toId;
+    /**
+     * id of carrier
+     * -- GETTER --
+     * Returns <code>String</code> carrier
+     * -- SETTER --
+     * Sets the carrier identifier.
+     */
     private String carrierID;
+    /**
+     * unique flight id
+     * -- GETTER --
+     * Returns <code>int</code> flight id
+     * -- SETTER --
+     * Sets the flight identifier.
+     */
     private int flightId;
+    /**
+     * flight class {Economy,Premium Economy, Business, First}
+     * -- GETTER --
+     * Returns <code>String</code> of flight class.
+     * -- SETTER --
+     * Sets the flight class.
+     */
     private String fClass;
+    /**
+     * flight type {roundTrip,oneWay}
+     * -- GETTER --
+     * Returns <code>String</code> of flight type.
+     * -- SETTER --
+     * Sets the flight type.
+     */
     private String fType;
+    /**
+     * date of departure
+     * -- GETTER --
+     * Returns <code>Date</code> of flight.
+     * -- SETTER --
+     * Sets the flight date.
+     */
     private Date date;
-    private Double distance;
-
+    /**
+     * flight distance
+     * -- GETTER --
+     * Returns <code>int</code> distance of flight.
+     * -- SETTER --
+     * Sets the flight distance.
+     */
+    private int distance;
 
     public Ticket(String fromId, String toId, String carrierID, int flightId, String fClass, String fType, Date date) {
         this.fromId = fromId;
@@ -21,47 +81,16 @@ public class Ticket {
         this.fClass = fClass;
         this.fType = fType;
         this.date = date;
-        distance = 0.0;
+        this.distance = 0;
     }
 
-    public String getFromId() {
-        return fromId;
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "fromId='" + fromId + '\'' +
+                ", toId='" + toId + '\'' +
+                ", date=" + date +
+                ", distance=" + distance +
+                '}';
     }
-
-    public String getToId() {
-        return toId;
-    }
-
-    public String getCarrierID() {
-        return carrierID;
-    }
-
-    public int getFlightId() {
-        return flightId;
-    }
-
-    public String getfClass() {
-        return fClass;
-    }
-
-    public String getfType() {
-        return fType;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDistance(Double distance) {
-        this.distance = distance;
-    }
-
 }
-
-/*
-Noah; Williams; noah.williams@travel-sabre.com; LHR; EDI; BA; 1454; Business; oneWay; 2017-08-06;
-Noah; Williams; noah.williams@travel-sabre.com; EDI; LHR; BA; 4541; Business; oneWay; 2017-08-09;
-
-Ethan; White; ethan.white@travel-sabre.com; ORD; SAN; AS; 6972; Economy; oneWay; 2008-01-02;
-Ethan; White; ethan.white@travel-sabre.com; SAN; ORD; AS; 2796; Economy; oneWay; 2008-01-05;
-*/

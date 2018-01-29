@@ -21,11 +21,13 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest(classes = FrequentFlyerApplication.class)
 @WebAppConfiguration
 public class FrequentFlyerApplicationTests {
+    public static final String PROFILE_UPDATE_SUCCESS_STRING = "Successfully updated your profile!";
     private WebDriver driver;
     private WebDriverWait wait;
     private final static String TEST_USER = "example@example.com";
     private final static String TEST_PASSWORD = "admin";
     private final static ByChained TABS_LOGOUT = new ByChained(By.className("tabs"), By.className("logoutButton"));
+    private final static String TEST_NAME = "Flights Administrator";
 
     @Before
     public void before() {
@@ -58,7 +60,13 @@ public class FrequentFlyerApplicationTests {
 
         WebElement nameInput = driver.findElement(By.id("name"));
         nameInput.clear();
-        nameInput.sendKeys("Flights Administrator");
+        nameInput.sendKeys("incorrect_input");
+
+        nameInput.submit();
+        assertEquals("error", nameInput.getAttribute("class"));
+
+        nameInput.clear();
+        nameInput.sendKeys(TEST_NAME);
 
         WebElement addressInput = driver.findElement(By.id("address"));
         addressInput.clear();
@@ -66,8 +74,8 @@ public class FrequentFlyerApplicationTests {
 
         driver.findElement(By.tagName("button")).click();
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("name")));
-        assertEquals(driver.findElement(By.id("name")).getText(), ("Flights Administrator"));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("toast")));
+        assertEquals(PROFILE_UPDATE_SUCCESS_STRING, driver.findElement(By.className("toast")).getText());
     }
 
     @After
