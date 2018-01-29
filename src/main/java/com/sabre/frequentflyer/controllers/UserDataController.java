@@ -54,8 +54,8 @@ public class UserDataController {
      *
      * @param userId        id of authored user logged in by Auth0
      * @param email         user email
-     * @param fromId        id of airport he departure
-     * @param toId          id of airport he arrive
+     * @param fromId        id of airport user departure
+     * @param toId          id of airport user arrive
      * @param carrierId     id of carrier
      * @param flightId      unique flight id
      * @param fClass        flight class {Economy,Premium Economy, Business, First}

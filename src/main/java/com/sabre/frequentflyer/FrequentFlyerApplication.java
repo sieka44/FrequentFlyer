@@ -7,6 +7,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 
+/**
+ * Starts application.
+ */
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan(basePackages = "com.sabre.frequentflyer")
