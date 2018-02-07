@@ -9,13 +9,13 @@
                    |_|                                |___/
 ```
 
-##Introduction
+## Introduction
 Web application for frequent flyers.
 For more information see [documentation](https://github.com/academy-poland/sabre_Zax37_sieka44/docs/index.html) 
 
 Authors: Kamil Sięka, Zachariasz Zacharski. 
  
-##Setup
+## Setup
 Step 1: To get started you need to:
 * [install JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 * [Install IntelliJ IDEA](https://www.jetbrains.com/idea/)
@@ -30,17 +30,17 @@ Step 3: Run IntelliJ IDEA, click "Import Project" and select recently downloaded
 
 Step 4: Choose "Import project from external model" then set Gradle's location, choose JVM 8.0 and click "Finish".
 
-##Run
+## Run
 1. Execute Gradle ```clean bootRun``` task.
 2. Go on [FrequentFlyer](http://localhost:8080/) website.
 
-##Used Technologies
+## Used Technologies
 * Frontend?
 * [Gradle](https://gradle.org/)
 * [Spring](https://projects.spring.io/spring-boot/)
 * [Lombok](https://projectlombok.org/)
 * [Unirest](http://unirest.io/java.html)
 
-####Testing
+#### Testing
 * [JUnit4](https://junit.org/junit4/)
 * [Selenium](http://www.seleniumhq.org/)
