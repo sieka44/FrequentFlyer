@@ -17,7 +17,7 @@ Authors: Kamil Sięka, Zachariasz Zacharski.
  
 ## Setup
 Step 1: To get started you need to:
-* [install JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+* [Install JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 * [Install IntelliJ IDEA](https://www.jetbrains.com/idea/)
 * [Install Git](https://git-scm.com/)
 * [Download Gradle](https://gradle.org/)(or skip that and use the remote one)
@@ -34,11 +34,16 @@ Step 4: Choose "Import project from external model" then set Gradle's location, 
 1. Execute Gradle ```clean bootRun``` task.
 2. Go on [FrequentFlyer](http://localhost:8080/) website.
 
+## HotSwap support
+1. Go to Intellij's Settings > Build, Execution, Deployment > Debugger > HotSwap.
+2. In "Reload classes after compilation" section select "Always".
+3. When project is running simply press Ctrl+F9 (Build > Build Project) to preview changes.
+
 ## Used Technologies
 ### Backend
 * [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 * [Gradle](https://gradle.org/)
-* [Spring](https://projects.spring.io/spring-boot/)
+* [Spring](https://projects.spring.io/spring-boot/) with [Spring-Loaded 1.2.8](https://github.com/spring-projects/spring-loaded)
 * [Lombok](https://projectlombok.org/)
 * [Unirest](http://unirest.io/java.html)
 ### Frontend
