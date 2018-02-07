@@ -8,11 +8,13 @@
                    | |                                 __/ |
                    |_|                                |___/
 ```
+
 ##Introduction
 Web application for frequent flyers.
 For more information see [documentation](https://github.com/academy-poland/sabre_Zax37_sieka44/docs/index.html) 
 
-Authors: Kamil Sięka, Zachariasz Zacharski.  
+Authors: Kamil Sięka, Zachariasz Zacharski. 
+ 
 ##Setup
 Step 1: To get started you need to:
 * [install JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
@@ -38,6 +40,7 @@ Step 4: Choose "Import project from external model" then set Gradle's location, 
 * [Spring](https://projects.spring.io/spring-boot/)
 * [Lombok](https://projectlombok.org/)
 * [Unirest](http://unirest.io/java.html)
+
 ####Testing
 * [JUnit4](https://junit.org/junit4/)
 * [Selenium](http://www.seleniumhq.org/)

@@ -103,7 +103,6 @@ public class APIController {
             Coordinates[] coordinates = new Coordinates[2];
             for (int i = 0; i < posts.length(); i++) {
                 JSONArray arr = posts.getJSONObject(i).getJSONObject("GeoCodeRS").getJSONArray("Place");
-                System.out.println(arr.toString());
                 String name = arr.getJSONObject(0).getString("City");
                 double x = arr.getJSONObject(0).getDouble("latitude");
                 double y = arr.getJSONObject(0).getDouble("longitude");
