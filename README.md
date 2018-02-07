@@ -35,13 +35,22 @@ Step 4: Choose "Import project from external model" then set Gradle's location, 
 2. Go on [FrequentFlyer](http://localhost:8080/) website.
 
 ## Used Technologies
-* Frontend?
+### Backend
+* [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 * [Gradle](https://gradle.org/)
 * [Spring](https://projects.spring.io/spring-boot/)
 * [Lombok](https://projectlombok.org/)
 * [Unirest](http://unirest.io/java.html)
-
-#### Testing
+### Frontend
+* [jQuery 3.1.1](http://jquery.com/) with [jQuery UI v1.12.1](https://jqueryui.com/)
+* [jQuery Validation Plugin](https://jqueryvalidation.org/)
+* [Materialize 1.0 alpha(v0.100.2)](http://materializecss.com/getting-started.html)
+* [Vue.js v2.5.13](https://vuejs.org/v2/guide/installation.html)
+* [vue-resource 1.3.5](https://github.com/pagekit/vue-resource)
+* SASS with [GradleSassPlugin 1.2.3](https://github.com/kravemir/GradleSassPlugin)
+* [Auth0 Lock v11 for Web](https://auth0.com/docs/libraries/lock/v11)
+* [Moment.js 2.20.1](https://momentjs.com/)
+### Testing
 * [JUnit4](https://junit.org/junit4/)
 * [Selenium](http://www.seleniumhq.org/)
 
