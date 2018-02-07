@@ -73,7 +73,7 @@ public class DbController {
     }
 
     /**
-     * Returns tickets of given user email
+     * Returns Collection of tickets of given user email
      *
      * @param email user email
      * @return tickets of given user
