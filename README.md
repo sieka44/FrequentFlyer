@@ -44,3 +44,24 @@ Step 4: Choose "Import project from external model" then set Gradle's location, 
 #### Testing
 * [JUnit4](https://junit.org/junit4/)
 * [Selenium](http://www.seleniumhq.org/)
+
+## Functionality Description
+1.Login
+ * User can log in on account using Google+ or FrequentFlyer account.
+ * If email or password would be wrong, suitable information will be provided.
+ * If user does not have account on FrequentFlyer service it can be created, simply by filling up "sign up" form.
+
+2.Homepage provides information like:
+ * How many miles user has flown and how many left to next FrequentFlyer level. 
+ * Last flights of current log in user.
+ 
+3.Profile
+* User can update profile with "Name" and "Address" fields.
+* User can reset his password, if such a need occurs.
+
+4.Add Ticket
+* User can add ticket to his database by filling form. FrequentFlyer service will automatically update user profile with right amount of miles. 
+* Last added ticket will occur in flight history on the homepage and user miles will be updated.
+
+5.Logout
+* User can logout by clicking on his name in the upper right corner. Service will automatically redirect user to log in screen.
