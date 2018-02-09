@@ -1,5 +1,4 @@
 applications:
 - name: FrequentFlyer
-  memory: 512M
   host: FrequentFlyer
   path: build/libs/FrequentFlyer-0.0.1-alpha.jar
