@@ -81,7 +81,6 @@ public class ManagementApiController {
                     .asString();
             Unirest.setTimeouts(0, 0);
             JSONObject json = new JSONObject(response.getBody());
-            System.out.println(response.getBody());
             json = new JSONObject(json.get("user_metadata").toString());
             return Integer.parseInt(json.get("miles").toString());
         } catch (UnirestException | UnsupportedEncodingException | JSONException e) {

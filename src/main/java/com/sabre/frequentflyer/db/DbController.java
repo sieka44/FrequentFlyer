@@ -65,7 +65,6 @@ public class DbController {
                     ticket.setDistance(distance);
                     tickets.put(data[2].trim(), ticket);
                 } else ticket.setDistance(Integer.parseInt(data[10].trim()));
-                System.out.println(ticket);
             }
         } catch (IOException | ParseException e) {
             e.printStackTrace();
@@ -73,7 +72,7 @@ public class DbController {
     }
 
     /**
-     * Returns tickets of given user email
+     * Returns Collection of tickets of given user email
      *
      * @param email user email
      * @return tickets of given user
