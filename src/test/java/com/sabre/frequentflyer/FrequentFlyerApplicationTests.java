@@ -43,10 +43,10 @@ public class FrequentFlyerApplicationTests {
 
     private void doLogin() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("auth0-lock-form")));
-        WebElement auth0Form = driver.findElement(By.className("auth0-lock-form"));
+        By auth0Form = By.className("auth0-lock-form");
         wait.until(ExpectedConditions.visibilityOfNestedElementsLocatedBy(auth0Form, By.name("email")));
-        auth0Form.findElement(By.name("email")).sendKeys(TEST_USER);
-        auth0Form.findElement(By.name("password")).sendKeys(TEST_PASSWORD);
+        driver.findElement(new ByChained(auth0Form, By.name("email"))).sendKeys(TEST_USER);
+        driver.findElement(new ByChained(auth0Form, By.name("password"))).sendKeys(TEST_PASSWORD);
         driver.findElement(By.className("auth0-lock-submit")).click();
         wait.until(ExpectedConditions.elementToBeClickable(TABS_LOGOUT));
     }
