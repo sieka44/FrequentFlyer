@@ -68,6 +68,9 @@
                     <h4 class="light">Your last travels:</h4>
 
                     <div class="row">
+                        <div id="no-tickets" v-if="!tickets.length">
+                            You haven't travelled with us yet! Please do give us a shot!
+                        </div>
                         <div class="col s12 m6" v-for="ticket in tickets">
                             <div class="card small hoverable">
                                 <div class="card-image">
