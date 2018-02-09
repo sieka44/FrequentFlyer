@@ -15,6 +15,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.Map;
+
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
@@ -29,6 +31,8 @@ public class FrequentFlyerApplicationTests {
     private final static String TEST_PASSWORD = "admin";
     private final static ByChained TABS_LOGOUT = new ByChained(By.className("tabs"), By.className("logoutButton"));
     private final static String TEST_NAME = "Flights Administrator";
+    private final static Map<String, String> env = System.getenv();
+    private final static String URL = env.get("URL");
 
     @Before
     public void before() {
@@ -49,14 +53,15 @@ public class FrequentFlyerApplicationTests {
 
     @Test
     public void auth0Login() {
-        driver.get("http://localhost:8080");
+        System.out.println(env);
+        driver.get(URL);
         doLogin();
         driver.findElement(TABS_LOGOUT).click();
     }
 
     @Test
     public void changingPersonalData() {
-        driver.get("http://localhost:8080");
+        driver.get(URL);
         doLogin();
         driver.findElement(By.id("profileTab")).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("name")));
@@ -104,7 +109,7 @@ public class FrequentFlyerApplicationTests {
 
     @Test
     public void addingTicket() {
-        driver.get("http://localhost:8080");
+        driver.get(URL);
         doLogin();
         driver.findElement(By.id("addTicketTab")).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("from")));
