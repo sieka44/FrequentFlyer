@@ -1,5 +1,5 @@
 applications:
-- name: sabre_Zax37_sieka44
+- name: FrequentFlyer
   memory: 512M
-  host: sabre_Zax37_sieka44
-  path: build/libs/sabre_Zax37_sieka44-0.0.1-alpha.jar
+  host: FrequentFlyer
+  path: build/libs/FrequentFlyer-0.0.1-alpha.jar
