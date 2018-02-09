@@ -11,7 +11,7 @@
 
 ## Introduction
 Web application for frequent flyers.
-For more information see [documentation](https://github.com/academy-poland/sabre_Zax37_sieka44/tree/Docs/docs) open index.html file in browser.
+For more information see [documentation](https://github.com/academy-poland/sabre_Zax37_sieka44/tree/master/docs) open index.html file in browser.
 
 Authors: Kamil Sięka, Zachariasz Zacharski. 
  
